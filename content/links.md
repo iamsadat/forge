@@ -7,10 +7,10 @@
 - BIO_HUB:        # Kit landing page URL (opt-in for the free missed-call automation)
 
 ## Lead magnet (free — list builder)
-- FREE_TEMPLATE:  # $0 Gumroad product: Missed-Call Text-Back (Free)
+- FREE_TEMPLATE: https://titanessence.gumroad.com/l/pignb   # Missed-Call Text-Back (Free) — published
 
 ## Product
-- PRODUCT_PACK:   # $49 Gumroad: The Local Business Automation Pack (intro $29 code LAUNCH)
+- PRODUCT_PACK: https://titanessence.gumroad.com/l/kowmaa   # $49 pack — published; intro $29 via code LAUNCH ($20 off)
 
 ## Service
 - BOOK_AUDIT:     # free automation-audit booking (Kit page / Calendly free / DM)
