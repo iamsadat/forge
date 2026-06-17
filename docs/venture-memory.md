@@ -41,5 +41,8 @@ _Single source of truth for decisions. Update as we go._
   $49 product pack started (flagship n8n workflow + setup recipes).
   Interactive progress tracker built (in-repo `tracker/index.html` + hosted
   Lovable app: https://forge-ops-engine-tracker.lovable.app).
+- 2026-06-17 — Batch02: 6 more scripts written + rendered; all 12 videos
+  ffprobe-verified valid (0.8–2.1MB vertical MP4s). Outreach kit + flagship
+  importable n8n workflow (missed-call text-back) added. Phase 2 ≈70%.
 - 2026-06-17 — GitHub push BLOCKED: no creds/gh in env; repo committed locally
   & push-ready (`scripts/push_to_github.sh`). Owner must auth to push.
