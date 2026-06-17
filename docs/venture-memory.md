@@ -33,3 +33,13 @@ _Single source of truth for decisions. Update as we go._
 - 2026-06-16 — Phase 0 done: venture scaffolded, dedicated WSL venv, titan
   reuse bridge wired, keys verified, metrics tracker live. $0 spend.
 - 2026-06-16 — Phase 1 started: niche research.
+- 2026-06-17 — Phase 1 done: niche locked (SMB automation, horizontal service
+  offer), studio brand "The Ops Engine"; plan approved by owner.
+- 2026-06-17 — Phase 2 build: 6 scripts (batch01) written + all 6 rendered &
+  verified on WSL (806KB–2MB MP4s). Render driver `produce.py` fixes faceless
+  b-roll VO coverage. Monetization (4 streams) + publishing/SEO drafted.
+  $49 product pack started (flagship n8n workflow + setup recipes).
+  Interactive progress tracker built (in-repo `tracker/index.html` + hosted
+  Lovable app: https://forge-ops-engine-tracker.lovable.app).
+- 2026-06-17 — GitHub push BLOCKED: no creds/gh in env; repo committed locally
+  & push-ready (`scripts/push_to_github.sh`). Owner must auth to push.

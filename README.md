@@ -7,9 +7,15 @@ Separate, clean project. **Reuses** the battle-tested `titan` faceless-video
 pipeline (sibling repo) — does not rebuild it.
 
 ## Status
-- **Phase 0 — environment:** ✅ done (this scaffold).
-- **Phase 1 — niche research + business plan:** in progress. Niche is **OPEN**;
-  decided by evidence, owner sign-off required before any build.
+- **Phase 0 — environment:** ✅ done.
+- **Phase 1 — research + plan:** ✅ done. Niche locked: AI automation for local
+  service businesses; studio brand **The Ops Engine**. Plan approved.
+- **Phase 2 — build:** 🔄 in progress. 6 scripts + 6 rendered videos, monetization
+  (4 streams), publishing/SEO, $49 product pack started, progress tracker.
+- **Progress tracker:** `tracker/index.html` (in-repo) + hosted
+  [Lovable app](https://forge-ops-engine-tracker.lovable.app).
+- **GitHub:** committed locally & push-ready — run `scripts/push_to_github.sh`
+  after `gh auth login` (no creds available to the overnight agent).
 
 ## Layout
 ```
