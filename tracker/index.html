@@ -105,7 +105,7 @@
 <script>
 window.STATE = {
   tagline: "Faceless automations that run service businesses in the background — built to first revenue, fast.",
-  updated: "2026-06-17",
+  updated: "2026-06-18",
   cards: [
     {k:"Phase", v:"2 · Build"},
     {k:"Budget spent", v:"$0"},
@@ -114,12 +114,12 @@ window.STATE = {
     {k:"Videos rendered", v:"12"},
     {k:"Streams wired", v:"4"}
   ],
-  summary: "Phase 0 (environment) and Phase 1 (research + approved plan) are complete. Niche locked: AI automations for local service businesses; studio brand 'The Ops Engine'. The titan video pipeline is reused via a clean bridge and verified end-to-end on WSL (ffmpeg + Pexels b-roll + edge-tts + karaoke captions). 12 scripts written (batch01 + batch02) and all 12 rendered & ffprobe-verified as valid vertical MP4s (0.8–2.1MB each). Monetization (4 streams), publishing/SEO metadata, outreach kit, and a flagship importable n8n workflow drafted. The repo is now live on GitHub (private). Remaining build work is entirely owner-gated: free account creation, affiliate applications, then publishing + outreach. $0 spent.",
+  summary: "Phases 0–1 complete (environment + approved plan). Niche: AI automations for local service businesses; brand 'The Ops Engine'. 12 scripts + 12 ffprobe-verified vertical renders via the reused titan pipeline; repo live on GitHub (private). FUNNEL IS NOW LIVE end-to-end, built via browser automation: Gumroad has the free Missed-Call magnet + the $49 Pack (intro $29 via LAUNCH); Kit has a published landing page (the-ops-engine.kit.com/free-automation) that captures the email, sends a reframed confirmation that delivers the free product, and an ACTIVE automation that tags new leads 'free-magnet' and enrolls them in a 5-email 'Magnet Nurture' sequence (Day 1/3/6/9/12) selling the $49 Pack, the n8n affiliate, and the done-for-you service. Left: wire Gumroad→Kit (needs Kit API key paste), set the IG bio link, then publish Reels + outreach to drive traffic → first revenue. Kit sequences/automations are free during the 14-day trial (plan decision after). $0 spent.",
   phases: [
     {name:"Phase 0 — Environment", pct:100, note:"venv, titan reuse bridge, keys verified, trackers"},
     {name:"Phase 1 — Research & Plan", pct:100, note:"5 niches scored, plan approved, niche + brand locked"},
-    {name:"Phase 2 — Build", pct:70, note:"12 scripts + 12 renders + monetization + publishing + product asset done; accounts/affiliates pending"},
-    {name:"Phase 3 — Launch & Revenue", pct:0, note:"publish + outreach + first revenue loop"}
+    {name:"Phase 2 — Build", pct:95, note:"12 scripts + 12 renders + monetization + Gumroad live + Kit funnel built & ACTIVE; only Gumroad↔Kit wiring left"},
+    {name:"Phase 3 — Launch & Revenue", pct:10, note:"funnel live end-to-end; set IG bio link + publish Reels + outreach → first revenue"}
   ],
   streams: [
     {name:"1 · Affiliate (recurring SaaS)", status:"ready to apply", cls:"prog", note:"n8n 30%/12mo, GoHighLevel, Kit"},
@@ -139,7 +139,8 @@ window.STATE = {
     {d:"2026-06-17", t:"Pushed to GitHub", x:"Repo live (private) at github.com/iamsadat/forge — source, docs, tracker + 12 final MP4s; 2.3GB stock cache & secrets gitignored."},
     {d:"2026-06-17", t:"Accounts created", x:"Owner created Instagram, Gumroad, Kit + applied to n8n affiliate. Funnel can now be wired."},
     {d:"2026-06-17", t:"Funnel playbook", x:"docs/funnel-setup.md: Kit landing page as bio hub, Gumroad↔Kit wiring, paste-ready product + 5-email nurture copy, free-magnet guide."},
-    {d:"2026-06-17", t:"Gumroad live", x:"Both products published (titanessence): free Missed-Call magnet + $49 Pack w/ files; LAUNCH code = $20 off → $29 intro. Built via browser automation."}
+    {d:"2026-06-17", t:"Gumroad live", x:"Both products published (titanessence): free Missed-Call magnet + $49 Pack w/ files; LAUNCH code = $20 off → $29 intro. Built via browser automation."},
+    {d:"2026-06-18", t:"Kit funnel LIVE", x:"Built via browser automation: landing page the-ops-engine.kit.com/free-automation (opt-in → confirm email → free Gumroad redirect); 5-email 'Magnet Nurture' sequence (Day 1/3/6/9/12) published; automation ACTIVE (join form → tag free-magnet → enroll). Sequences/automations free during 14-day Kit trial (paid after)."}
   ],
   done: [
     {t:"Scaffold venture project + dedicated venv", tag:"phase 0"},
@@ -159,14 +160,19 @@ window.STATE = {
     {t:"Flagship importable n8n workflow (missed-call text-back)", tag:"phase 2"},
     {t:"Push repo to GitHub (github.com/iamsadat/forge)", tag:"phase 2"},
     {t:"Accounts created: Instagram, Gumroad, Kit + n8n affiliate applied", tag:"phase 2"},
-    {t:"Funnel playbook + paste-ready copy (docs/funnel-setup.md)", tag:"phase 2"}
+    {t:"Funnel playbook + paste-ready copy (docs/funnel-setup.md)", tag:"phase 2"},
+    {t:"Gumroad: free magnet + $49 pack published (files, descriptions, LAUNCH code)", tag:"funnel"},
+    {t:"Kit landing page built + published (BIO_HUB = the-ops-engine.kit.com/free-automation)", tag:"funnel"},
+    {t:"Kit incentive email reframed → delivers free Gumroad product on confirm", tag:"funnel"},
+    {t:"Kit 'Magnet Nurture' 5-email sequence published (Day 1/3/6/9/12)", tag:"funnel"},
+    {t:"Kit automation ACTIVE: join form → tag free-magnet → enroll in nurture", tag:"funnel"}
   ],
   todo: [
-    {id:"gum", t:"Gumroad: publish free magnet + $49 pack (paste Blocks 1–2)", who:"OWNER"},
-    {id:"kit", t:"Kit: landing page + incentive + 5-email nurture (Blocks 3–4)", who:"OWNER"},
-    {id:"wire", t:"Connect Gumroad → Kit (API key, tags free-magnet/customer)", who:"OWNER"},
-    {id:"links", t:"Paste real URLs into links.md (BIO_HUB, FREE_TEMPLATE, PRODUCT_PACK, AFF_N8N)", who:"OWNER"},
-    {id:"bio", t:"Set Instagram bio link = Kit landing page", who:"OWNER"},
+    {id:"wire", t:"Gumroad → Kit integration (per product): tag free-magnet / customer — needs Kit API key paste", who:"OWNER"},
+    {id:"bio", t:"Set Instagram bio link = the-ops-engine.kit.com/free-automation", who:"OWNER"},
+    {id:"test", t:"End-to-end test: opt-in → confirm → free download → nurture fires", who:"OWNER"},
+    {id:"n8n", t:"Swap n8n.io → affiliate link in Kit nurture Email 3 once approved", who:"OWNER"},
+    {id:"kitplan", t:"Decide Kit plan before trial ends (~Jul 2) to keep automation + sequence running", who:"OWNER"},
     {id:"publish", t:"Publish first Reels (3–4/wk) — CTA 'link in bio'", who:"OWNER"},
     {id:"outreach", t:"Start service outreach 10–20/day (docs/outreach.md)", who:"OWNER"}
   ],
