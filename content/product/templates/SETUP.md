@@ -10,9 +10,12 @@ in n8n or Make).
 - Twilio account + number (client's) for SMS recipes.
 - A Google account (Sheets for logging; Calendar for bookings).
 
-## 1. Missed-Call Text-Back  ✅ included JSON
-Webhook (Twilio no-answer callback) → Set (extract From/To) → HTTP Request
-(Twilio Send Message). See the sticky note in the JSON.
+## 1. Missed-Call Text-Back  ✅ included JSON (client-deploy ready)
+Webhook → **Config** (edit once: SID, From number, message) → **Only Missed Calls**
+(filters DialCallStatus/CallStatus = no-answer/busy/failed so answered calls are
+skipped) → HTTP Request (Twilio Send Message). Import the JSON, fill the Config node,
+add the HTTP Basic Auth credential (SID:AuthToken), point Twilio's call action/status
+callback at the webhook, activate. Full steps are in the sticky note inside the JSON.
 
 ## 2. Speed-to-Lead Router
 Webhook (website form) → Set (name/phone/email/service) →

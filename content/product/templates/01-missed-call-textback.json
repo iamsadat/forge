@@ -3,15 +3,15 @@
   "nodes": [
     {
       "parameters": {
-        "content": "## Missed-Call Text-Back\nWhen a call goes unanswered, Twilio POSTs to this webhook and we text the caller back in seconds — so a missed call never becomes a lost job.\n\n### Setup (5 min)\n1. Buy/own a Twilio number. Under the number's Voice settings, forward to the business line; on **no-answer / busy**, set the status callback to POST this webhook's Production URL.\n2. Replace `ACXXXX` in the Send Text Back URL with your Twilio Account SID.\n3. Add an **HTTP Basic Auth** credential = Account SID : Auth Token.\n4. Edit the message Body to match the brand.\n\nClient pays Twilio usage (~$0.0079/SMS). $0 to you.",
-        "height": 320,
-        "width": 380
+        "content": "## Missed-Call Text-Back — auto-text every missed caller\nWhen a call isn't answered, Twilio POSTs to this webhook and we text the caller back in seconds — so a missed call never becomes a lost job.\n\n### Setup (5 min)\n1. **Config node** → set your Twilio **Account SID** (AC…), your Twilio **SMS number** (From, E.164 e.g. +15551234567), and the **message** to match the brand.\n2. On **Send Text Back**, add an **HTTP Basic Auth** credential → username = Account SID, password = Auth Token.\n3. In Twilio, point the number's incoming call to TwiML that `<Dial action=\"…\">`s the business line, with **action = this webhook's Production URL** (or set the call **status callback** to it).\n4. **Activate** the workflow. The *Only Missed Calls* node filters for no-answer / busy / failed, so answered calls are ignored and the caller is never double-texted.\n\nClient pays Twilio usage (~$0.0079/SMS). $0 to you.",
+        "height": 360,
+        "width": 440
       },
       "id": "note1",
       "name": "Setup Notes",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
-      "position": [200, 60]
+      "position": [180, 40]
     },
     {
       "parameters": {
@@ -24,37 +24,56 @@
       "name": "Missed Call Webhook",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
-      "position": [240, 420]
+      "position": [220, 460]
     },
     {
       "parameters": {
+        "keepOnlySet": false,
         "values": {
           "string": [
-            { "name": "caller", "value": "={{ $json.body.From }}" },
-            { "name": "business", "value": "={{ $json.body.To }}" }
+            { "name": "accountSid", "value": "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" },
+            { "name": "fromNumber", "value": "+15551234567" },
+            { "name": "messageBody", "value": "Sorry we missed your call! How can we help? Reply here and we'll get right back to you." }
           ]
         },
         "options": {}
       },
-      "id": "set1",
-      "name": "Extract Numbers",
+      "id": "config1",
+      "name": "Config — edit me",
       "type": "n8n-nodes-base.set",
       "typeVersion": 2,
-      "position": [480, 420]
+      "position": [460, 460]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            { "value1": "={{ $json.body.DialCallStatus || $json.body.CallStatus }}", "operation": "equal", "value2": "no-answer" },
+            { "value1": "={{ $json.body.DialCallStatus || $json.body.CallStatus }}", "operation": "equal", "value2": "busy" },
+            { "value1": "={{ $json.body.DialCallStatus || $json.body.CallStatus }}", "operation": "equal", "value2": "failed" }
+          ]
+        },
+        "combineOperation": "any"
+      },
+      "id": "if1",
+      "name": "Only Missed Calls",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [700, 460]
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "https://api.twilio.com/2010-04-01/Accounts/ACXXXX/Messages.json",
+        "url": "={{ 'https://api.twilio.com/2010-04-01/Accounts/' + $json.accountSid + '/Messages.json' }}",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpBasicAuth",
         "sendBody": true,
         "contentType": "form-urlencoded",
         "bodyParameters": {
           "parameters": [
-            { "name": "To", "value": "={{ $json.caller }}" },
-            { "name": "From", "value": "={{ $json.business }}" },
-            { "name": "Body", "value": "Sorry we missed your call! How can we help? Reply here and we'll get right back to you." }
+            { "name": "To", "value": "={{ $json.body.From }}" },
+            { "name": "From", "value": "={{ $json.fromNumber }}" },
+            { "name": "Body", "value": "={{ $json.messageBody }}" }
           ]
         },
         "options": {}
@@ -63,15 +82,21 @@
       "name": "Send Text Back",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
-      "position": [720, 420]
+      "position": [940, 400]
     }
   ],
   "connections": {
     "Missed Call Webhook": {
-      "main": [[{ "node": "Extract Numbers", "type": "main", "index": 0 }]]
+      "main": [[{ "node": "Config — edit me", "type": "main", "index": 0 }]]
     },
-    "Extract Numbers": {
-      "main": [[{ "node": "Send Text Back", "type": "main", "index": 0 }]]
+    "Config — edit me": {
+      "main": [[{ "node": "Only Missed Calls", "type": "main", "index": 0 }]]
+    },
+    "Only Missed Calls": {
+      "main": [
+        [{ "node": "Send Text Back", "type": "main", "index": 0 }],
+        []
+      ]
     }
   },
   "settings": {},
