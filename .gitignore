@@ -24,6 +24,9 @@ assets/thumbnails/*
 renders/*.vo.mp3
 renders/*.captions.ass
 
+# Packaging artifacts (zips built from tracked source for upload)
+content/product/*.zip
+
 # OS
 .DS_Store
 desktop.ini
