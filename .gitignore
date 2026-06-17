@@ -1,0 +1,31 @@
+# Secrets — NEVER commit
+.env
+*.env
+**/token*.json
+**/client_secret*.json
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Data / DB
+data/*.db
+data/*.sqlite
+
+# Generated media (large, regenerable)
+renders/
+assets/broll/*
+assets/music/*
+assets/thumbnails/*
+!assets/**/.gitkeep
+
+# OS
+.DS_Store
+desktop.ini
+Thumbs.db
+
+# Tooling
+.claude-flow/
+.swarm/
