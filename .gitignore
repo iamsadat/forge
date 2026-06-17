@@ -14,12 +14,15 @@ __pycache__/
 data/*.db
 data/*.sqlite
 
-# Generated media (large, regenerable)
-renders/
+# Raw stock cache (2.3GB, regenerable from Pexels)
 assets/broll/*
 assets/music/*
 assets/thumbnails/*
 !assets/**/.gitkeep
+
+# Render intermediates (keep final .mp4 deliverables, drop scratch files)
+renders/*.vo.mp3
+renders/*.captions.ass
 
 # OS
 .DS_Store
