@@ -44,5 +44,7 @@ _Single source of truth for decisions. Update as we go._
 - 2026-06-17 — Batch02: 6 more scripts written + rendered; all 12 videos
   ffprobe-verified valid (0.8–2.1MB vertical MP4s). Outreach kit + flagship
   importable n8n workflow (missed-call text-back) added. Phase 2 ≈70%.
-- 2026-06-17 — GitHub push BLOCKED: no creds/gh in env; repo committed locally
-  & push-ready (`scripts/push_to_github.sh`). Owner must auth to push.
+- 2026-06-17 — GitHub: ✅ PUSHED to https://github.com/iamsadat/forge (private,
+  branch `main`) after owner ran `gh auth login`. Includes the 12 final MP4s;
+  2.3 GB raw Pexels cache + secrets stay gitignored. Pushed via WSL git using
+  Windows `gh.exe` token through a transient auth header (token not persisted).
