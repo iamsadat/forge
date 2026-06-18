@@ -1,0 +1,99 @@
+{
+  "name": "Auto Review Requests",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Auto Review Requests — turn finished jobs into 5-star reviews\nWhen a job is marked done, wait a couple of hours, then text the customer your Google review link. More reviews → more inbound calls.\n\n### Setup (5 min)\n1. **Config node** → Twilio **Account SID**, your **From** number, and your **Google review short-link** (get it from your Google Business Profile → Ask for reviews).\n2. On **Send Review Request**, add the **HTTP Basic Auth** credential (Account SID : Auth Token).\n3. Point your CRM/field app to POST to this webhook when a job is completed. Expected body fields: `name`, `phone`.\n4. Tune the **Wait** node (default 2h after completion). Activate.\n\nOptional: add a **Google Sheets → Append** to track who's been asked. Client pays Twilio (~$0.0079/SMS). $0 to you.",
+        "height": 340,
+        "width": 440
+      },
+      "id": "note1",
+      "name": "Setup Notes",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [180, 40]
+    },
+    {
+      "parameters": { "httpMethod": "POST", "path": "job-done", "responseMode": "onReceived", "options": {} },
+      "id": "webhook1",
+      "name": "Job Done Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [220, 460]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": false,
+        "values": {
+          "string": [
+            { "name": "accountSid", "value": "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" },
+            { "name": "fromNumber", "value": "+15551234567" },
+            { "name": "reviewLink", "value": "https://g.page/r/your-review-short-link/review" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "config1",
+      "name": "Config — edit me",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [440, 460]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": false,
+        "values": {
+          "string": [
+            { "name": "customerName", "value": "={{ $json.body.name }}" },
+            { "name": "customerPhone", "value": "={{ $json.body.phone }}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set1",
+      "name": "Extract Customer",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [660, 460]
+    },
+    {
+      "parameters": { "amount": 2, "unit": "hours" },
+      "id": "wait1",
+      "name": "Wait 2h",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [880, 460]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'https://api.twilio.com/2010-04-01/Accounts/' + $('Config — edit me').item.json.accountSid + '/Messages.json' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            { "name": "To", "value": "={{ $('Extract Customer').item.json.customerPhone }}" },
+            { "name": "From", "value": "={{ $('Config — edit me').item.json.fromNumber }}" },
+            { "name": "Body", "value": "={{ 'Hi ' + $('Extract Customer').item.json.customerName + ', thanks for choosing us! If we did right by you, a quick review means the world: ' + $('Config — edit me').item.json.reviewLink }}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "http1",
+      "name": "Send Review Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [1100, 460]
+    }
+  ],
+  "connections": {
+    "Job Done Webhook": { "main": [[{ "node": "Config — edit me", "type": "main", "index": 0 }]] },
+    "Config — edit me": { "main": [[{ "node": "Extract Customer", "type": "main", "index": 0 }]] },
+    "Extract Customer": { "main": [[{ "node": "Wait 2h", "type": "main", "index": 0 }]] },
+    "Wait 2h": { "main": [[{ "node": "Send Review Request", "type": "main", "index": 0 }]] }
+  },
+  "settings": {},
+  "active": false
+}

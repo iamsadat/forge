@@ -1,0 +1,117 @@
+{
+  "name": "Speed-to-Lead Router",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Speed-to-Lead Router — first touch in under 60s\nWhen a website/landing form is submitted, this texts the lead instantly and alerts the owner — so you reply before the competitor does (≈21x more likely to win).\n\n### Setup (5 min)\n1. **Config node** → Twilio **Account SID**, your Twilio **From** number, the **owner's mobile**, and your **booking link**.\n2. On both HTTP nodes, add the **HTTP Basic Auth** credential (Account SID : Auth Token).\n3. Point your form/CRM to POST the lead to this webhook's Production URL. Expected fields in the body: `name`, `phone`, `email`, `service`.\n4. Activate.\n\nOptional add-on: drop a **Google Sheets → Append** node after *Extract Lead* to log every lead. Client pays Twilio (~$0.0079/SMS). $0 to you.",
+        "height": 360,
+        "width": 440
+      },
+      "id": "note1",
+      "name": "Setup Notes",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [180, 40]
+    },
+    {
+      "parameters": { "httpMethod": "POST", "path": "new-lead", "responseMode": "onReceived", "options": {} },
+      "id": "webhook1",
+      "name": "New Lead Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [220, 460]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": false,
+        "values": {
+          "string": [
+            { "name": "accountSid", "value": "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" },
+            { "name": "fromNumber", "value": "+15551234567" },
+            { "name": "ownerPhone", "value": "+15557654321" },
+            { "name": "bookingLink", "value": "https://cal.com/your-handle/intro" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "config1",
+      "name": "Config — edit me",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [440, 460]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": false,
+        "values": {
+          "string": [
+            { "name": "leadName", "value": "={{ $json.body.name }}" },
+            { "name": "leadPhone", "value": "={{ $json.body.phone }}" },
+            { "name": "leadEmail", "value": "={{ $json.body.email }}" },
+            { "name": "service", "value": "={{ $json.body.service }}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set1",
+      "name": "Extract Lead",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [660, 460]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'https://api.twilio.com/2010-04-01/Accounts/' + $('Config — edit me').item.json.accountSid + '/Messages.json' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            { "name": "To", "value": "={{ $('Extract Lead').item.json.leadPhone }}" },
+            { "name": "From", "value": "={{ $('Config — edit me').item.json.fromNumber }}" },
+            { "name": "Body", "value": "={{ 'Hi ' + $('Extract Lead').item.json.leadName + ', thanks for reaching out! Grab a time here: ' + $('Config — edit me').item.json.bookingLink + ' — or just reply with a good time.' }}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "http1",
+      "name": "Text the Lead",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [880, 380]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'https://api.twilio.com/2010-04-01/Accounts/' + $('Config — edit me').item.json.accountSid + '/Messages.json' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            { "name": "To", "value": "={{ $('Config — edit me').item.json.ownerPhone }}" },
+            { "name": "From", "value": "={{ $('Config — edit me').item.json.fromNumber }}" },
+            { "name": "Body", "value": "={{ 'New lead: ' + $('Extract Lead').item.json.leadName + ' · ' + $('Extract Lead').item.json.leadPhone + ' · ' + $('Extract Lead').item.json.service }}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "http2",
+      "name": "Alert the Owner",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [1100, 380]
+    }
+  ],
+  "connections": {
+    "New Lead Webhook": { "main": [[{ "node": "Config — edit me", "type": "main", "index": 0 }]] },
+    "Config — edit me": { "main": [[{ "node": "Extract Lead", "type": "main", "index": 0 }]] },
+    "Extract Lead": { "main": [[{ "node": "Text the Lead", "type": "main", "index": 0 }]] },
+    "Text the Lead": { "main": [[{ "node": "Alert the Owner", "type": "main", "index": 0 }]] }
+  },
+  "settings": {},
+  "active": false
+}

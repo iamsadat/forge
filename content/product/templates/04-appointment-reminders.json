@@ -1,0 +1,104 @@
+{
+  "name": "Appointment Reminders",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Appointment Reminders — kill no-shows\nWhen an appointment is booked, this waits until ~24h before and texts a reminder with a reschedule option. Fewer empty slots, more completed jobs.\n\n### Setup (5 min)\n1. **Config node** → Twilio **Account SID** and your **From** number.\n2. On **Send Reminder**, add the **HTTP Basic Auth** credential (Account SID : Auth Token).\n3. Point your booking tool (Calendly/Cal.com/CRM webhook) to POST here when an appointment is created. Expected body fields: `name`, `phone`, `appointmentTime` (ISO 8601, e.g. 2026-07-02T14:30:00-05:00).\n4. *Extract* computes **remindAt = appointmentTime − 24h**; the **Wait** node holds the execution until then. Adjust the offset in *Extract* if you want a different lead time. Activate.\n\nNote: needs n8n to be running when the reminder fires (n8n Cloud, or always-on self-host). Client pays Twilio (~$0.0079/SMS). $0 to you.",
+        "height": 360,
+        "width": 460
+      },
+      "id": "note1",
+      "name": "Setup Notes",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [180, 40]
+    },
+    {
+      "parameters": { "httpMethod": "POST", "path": "appointment-booked", "responseMode": "onReceived", "options": {} },
+      "id": "webhook1",
+      "name": "Appointment Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [220, 460]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": false,
+        "values": {
+          "string": [
+            { "name": "accountSid", "value": "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" },
+            { "name": "fromNumber", "value": "+15551234567" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "config1",
+      "name": "Config — edit me",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [440, 460]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": false,
+        "values": {
+          "string": [
+            { "name": "customerName", "value": "={{ $json.body.name }}" },
+            { "name": "customerPhone", "value": "={{ $json.body.phone }}" },
+            { "name": "appointmentTime", "value": "={{ $json.body.appointmentTime }}" },
+            { "name": "remindAt", "value": "={{ DateTime.fromISO($json.body.appointmentTime).minus({ hours: 24 }).toISO() }}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set1",
+      "name": "Extract Appointment",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [660, 460]
+    },
+    {
+      "parameters": {
+        "resume": "specificTime",
+        "dateTime": "={{ $('Extract Appointment').item.json.remindAt }}",
+        "options": {}
+      },
+      "id": "wait1",
+      "name": "Wait Until 24h Before",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [880, 460]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'https://api.twilio.com/2010-04-01/Accounts/' + $('Config — edit me').item.json.accountSid + '/Messages.json' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            { "name": "To", "value": "={{ $('Extract Appointment').item.json.customerPhone }}" },
+            { "name": "From", "value": "={{ $('Config — edit me').item.json.fromNumber }}" },
+            { "name": "Body", "value": "={{ 'Reminder: ' + $('Extract Appointment').item.json.customerName + ', we have you booked for ' + DateTime.fromISO($('Extract Appointment').item.json.appointmentTime).toFormat('ccc LLL d, h:mm a') + '. See you then! Reply R to reschedule.' }}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "http1",
+      "name": "Send Reminder",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [1100, 460]
+    }
+  ],
+  "connections": {
+    "Appointment Webhook": { "main": [[{ "node": "Config — edit me", "type": "main", "index": 0 }]] },
+    "Config — edit me": { "main": [[{ "node": "Extract Appointment", "type": "main", "index": 0 }]] },
+    "Extract Appointment": { "main": [[{ "node": "Wait Until 24h Before", "type": "main", "index": 0 }]] },
+    "Wait Until 24h Before": { "main": [[{ "node": "Send Reminder", "type": "main", "index": 0 }]] }
+  },
+  "settings": {},
+  "active": false
+}

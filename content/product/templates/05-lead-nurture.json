@@ -1,0 +1,184 @@
+{
+  "name": "Lead-Nurture Sequence",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Lead-Nurture Sequence — 5 touches over 10 days\nWhen a lead comes in but doesn't book, this drips 5 SMS touches over 10 days so warm leads don't go cold. Stop the sequence by deactivating or adding a reply check (see note).\n\n### Setup (5 min)\n1. **Config node** → Twilio **Account SID**, your **From** number, your **booking link**.\n2. Add the **HTTP Basic Auth** credential (Account SID : Auth Token) on each *Day N* node (or set it once and copy).\n3. POST new leads to this webhook. Expected body fields: `name`, `phone`.\n4. Edit each *Day N* message to your voice. Activate.\n\nUpgrades: swap any *Day N* SMS for an **Email** node for variety; add an **IF** after each Wait that checks a 'booked' flag (Sheet/CRM) to stop nurturing once they convert. Client pays Twilio (~$0.0079/SMS). $0 to you.",
+        "height": 360,
+        "width": 460
+      },
+      "id": "note1",
+      "name": "Setup Notes",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [180, 40]
+    },
+    {
+      "parameters": { "httpMethod": "POST", "path": "nurture-lead", "responseMode": "onReceived", "options": {} },
+      "id": "webhook1",
+      "name": "New Lead Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [220, 480]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": false,
+        "values": {
+          "string": [
+            { "name": "accountSid", "value": "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" },
+            { "name": "fromNumber", "value": "+15551234567" },
+            { "name": "bookingLink", "value": "https://cal.com/your-handle/intro" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "config1",
+      "name": "Config — edit me",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [420, 480]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": false,
+        "values": {
+          "string": [
+            { "name": "leadName", "value": "={{ $json.body.name }}" },
+            { "name": "leadPhone", "value": "={{ $json.body.phone }}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set1",
+      "name": "Extract Lead",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [620, 480]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'https://api.twilio.com/2010-04-01/Accounts/' + $('Config — edit me').item.json.accountSid + '/Messages.json' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": { "parameters": [
+          { "name": "To", "value": "={{ $('Extract Lead').item.json.leadPhone }}" },
+          { "name": "From", "value": "={{ $('Config — edit me').item.json.fromNumber }}" },
+          { "name": "Body", "value": "={{ 'Hi ' + $('Extract Lead').item.json.leadName + ', thanks for reaching out! I help local businesses stop losing leads to slow follow-up. Want to grab a quick time? ' + $('Config — edit me').item.json.bookingLink }}" }
+        ] },
+        "options": {}
+      },
+      "id": "http0",
+      "name": "Day 0 — Welcome",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [820, 480]
+    },
+    { "parameters": { "amount": 1, "unit": "days" }, "id": "wait1", "name": "Wait 1 Day", "type": "n8n-nodes-base.wait", "typeVersion": 1, "position": [1020, 480] },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'https://api.twilio.com/2010-04-01/Accounts/' + $('Config — edit me').item.json.accountSid + '/Messages.json' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": { "parameters": [
+          { "name": "To", "value": "={{ $('Extract Lead').item.json.leadPhone }}" },
+          { "name": "From", "value": "={{ $('Config — edit me').item.json.fromNumber }}" },
+          { "name": "Body", "value": "={{ $('Extract Lead').item.json.leadName + ', quick proof: replying to a new lead within 5 minutes makes you ~21x more likely to win the job. Most businesses take hours. Want me to set that up for you? ' + $('Config — edit me').item.json.bookingLink }}" }
+        ] },
+        "options": {}
+      },
+      "id": "http1",
+      "name": "Day 1 — Proof",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [1220, 480]
+    },
+    { "parameters": { "amount": 2, "unit": "days" }, "id": "wait2", "name": "Wait 2 Days", "type": "n8n-nodes-base.wait", "typeVersion": 1, "position": [1420, 480] },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'https://api.twilio.com/2010-04-01/Accounts/' + $('Config — edit me').item.json.accountSid + '/Messages.json' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": { "parameters": [
+          { "name": "To", "value": "={{ $('Extract Lead').item.json.leadPhone }}" },
+          { "name": "From", "value": "={{ $('Config — edit me').item.json.fromNumber }}" },
+          { "name": "Body", "value": "={{ 'Still thinking it over, ' + $('Extract Lead').item.json.leadName + '? I can install missed-call text-back + speed-to-lead for a flat fee — usually pays for itself in 2 recovered jobs. Reply \\'info\\' and I\\'ll send details.' }}" }
+        ] },
+        "options": {}
+      },
+      "id": "http3",
+      "name": "Day 3 — Offer",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [1620, 480]
+    },
+    { "parameters": { "amount": 3, "unit": "days" }, "id": "wait3", "name": "Wait 3 Days", "type": "n8n-nodes-base.wait", "typeVersion": 1, "position": [1820, 480] },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'https://api.twilio.com/2010-04-01/Accounts/' + $('Config — edit me').item.json.accountSid + '/Messages.json' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": { "parameters": [
+          { "name": "To", "value": "={{ $('Extract Lead').item.json.leadPhone }}" },
+          { "name": "From", "value": "={{ $('Config — edit me').item.json.fromNumber }}" },
+          { "name": "Body", "value": "={{ $('Extract Lead').item.json.leadName + ', a contractor I set this up for booked 7 extra jobs in month one just from texting back missed calls. Happy to show you the exact setup: ' + $('Config — edit me').item.json.bookingLink }}" }
+        ] },
+        "options": {}
+      },
+      "id": "http6",
+      "name": "Day 6 — Case Study",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [2020, 480]
+    },
+    { "parameters": { "amount": 4, "unit": "days" }, "id": "wait4", "name": "Wait 4 Days", "type": "n8n-nodes-base.wait", "typeVersion": 1, "position": [2220, 480] },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'https://api.twilio.com/2010-04-01/Accounts/' + $('Config — edit me').item.json.accountSid + '/Messages.json' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": { "parameters": [
+          { "name": "To", "value": "={{ $('Extract Lead').item.json.leadPhone }}" },
+          { "name": "From", "value": "={{ $('Config — edit me').item.json.fromNumber }}" },
+          { "name": "Body", "value": "={{ 'Last note, ' + $('Extract Lead').item.json.leadName + ' — if now isn\\'t the time, no worries. When you\\'re ready to stop leaking leads, I\\'m one reply away. ' + $('Config — edit me').item.json.bookingLink }}" }
+        ] },
+        "options": {}
+      },
+      "id": "http10",
+      "name": "Day 10 — Last Call",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [2420, 480]
+    }
+  ],
+  "connections": {
+    "New Lead Webhook": { "main": [[{ "node": "Config — edit me", "type": "main", "index": 0 }]] },
+    "Config — edit me": { "main": [[{ "node": "Extract Lead", "type": "main", "index": 0 }]] },
+    "Extract Lead": { "main": [[{ "node": "Day 0 — Welcome", "type": "main", "index": 0 }]] },
+    "Day 0 — Welcome": { "main": [[{ "node": "Wait 1 Day", "type": "main", "index": 0 }]] },
+    "Wait 1 Day": { "main": [[{ "node": "Day 1 — Proof", "type": "main", "index": 0 }]] },
+    "Day 1 — Proof": { "main": [[{ "node": "Wait 2 Days", "type": "main", "index": 0 }]] },
+    "Wait 2 Days": { "main": [[{ "node": "Day 3 — Offer", "type": "main", "index": 0 }]] },
+    "Day 3 — Offer": { "main": [[{ "node": "Wait 3 Days", "type": "main", "index": 0 }]] },
+    "Wait 3 Days": { "main": [[{ "node": "Day 6 — Case Study", "type": "main", "index": 0 }]] },
+    "Day 6 — Case Study": { "main": [[{ "node": "Wait 4 Days", "type": "main", "index": 0 }]] },
+    "Wait 4 Days": { "main": [[{ "node": "Day 10 — Last Call", "type": "main", "index": 0 }]] }
+  },
+  "settings": {},
+  "active": false
+}
