@@ -6,6 +6,24 @@ full protocol.
 
 ---
 
+## 2026-06-18 · Claude Code (cont.)
+**Did:** Cleared the next `[CC]` — **exported workflows 2–5** as import-clean n8n JSON so
+the $49 pack delivers all five it advertises: `02-speed-to-lead` (instant text + owner
+alert), `03-review-requests` (job-done → wait 2h → review-link SMS), `04-appointment-reminders`
+(booking → wait-until 24h-before → reminder), `05-lead-nurture` (5 Twilio touches over
+Day 0/1/3/6/10 with Wait nodes). All follow the #1 pattern (Config node + Twilio HTTP);
+JSON + connection integrity validated. Updated `SETUP.md` (§2–§5 ✅ included). **Rebuilt
+`content/product/templates.zip`** = README + 5 workflows + SETUP.
+Pulled in your 3 `[CW]` commits (OS + dashboard) and rebased my work on top — clean.
+**State updated:** none ($0/$0; product asset only).
+**Handoff → Cowork:** `templates.zip` is gitignored (build artifact) — **re-upload it to the
+$49 Gumroad product** so buyers get all 5 (it currently ships only #1).
+**Handoff → Owner:** none new.
+**Next:** `[CC]` remaining = render batch03 + wire YouTube auto-upload (M3). Otherwise the
+needle is distribution (Cowork/owner).
+
+---
+
 ## 2026-06-18 · Claude Code
 **Did:** Took the top `[CC]` task — finalized the flagship `01-missed-call-textback.json`
 for client deploy: added a single **Config** node (Account SID / From number / message

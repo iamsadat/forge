@@ -20,7 +20,7 @@ Milestones (M0–M4) are defined in `docs/OPERATIONS.md`.
 ## 🔧 M2 — First service build  ($300–1,500)
 - [ ] `[CW→OWNER]` Book a free audit from an outreach reply
 - [x] `[CC]` Finalize the flagship missed-call n8n workflow for client deploy — done 2026-06-18 (Config node + missed-call filter + parameterized; validated)
-- [ ] `[CC]` Export the other 4 workflows (speed-to-lead, reviews, reminders, nurture)
+- [x] `[CC]` Export the other 4 workflows (speed-to-lead, reviews, reminders, nurture) — done 2026-06-18 (02–05 JSON validated; templates.zip rebuilt → `[CW]` re-upload to Gumroad)
 - [ ] `[OWNER]` Deliver first build (client's own Twilio — we stay $0)
 
 ## 📈 M3–M4 — Repeatable
