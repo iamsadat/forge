@@ -6,6 +6,26 @@ full protocol.
 
 ---
 
+## 2026-06-18 · Claude Code
+**Did:** Wired **YouTube auto-upload** so the 12 finished renders can actually ship —
+new `src/forge/publish.py` reuses titan's working `YouTubeClient` (OAuth refresh-token +
+resumable upload) via the bridge, builds per-video YouTube metadata from the same scripts
+that produced the renders (`#Shorts` title, hook + value + CTA + bio link + niche tags, per
+`content/publishing.md` rules), with a fuzzy title→render matcher. **Dry-run validated all
+12 renders match, metadata builds, YouTube creds detected OK — zero uploaded** (it's offline
+by default). **Owner-gated:** real upload needs `--confirm` and defaults to `privacy=private`
+so nothing goes public without review.
+**State updated:** none ($0/$0).
+**Handoff → Owner:** when you're ready, run
+`PYTHONPATH=src .venv/bin/python -m forge.publish --confirm` to stage all 12 as **private**
+YouTube drafts; review in Studio, then flip to public on the `content/publishing.md` schedule.
+(Add `--only <slug>` for one, `--privacy unlisted` if you prefer.)
+**Handoff → Cowork:** none new (your tracker-deploy + templates.zip items still open below).
+**Next:** `[CC]` batch03 render is the only item left in my lane, but it's lower-leverage than
+distributing the 12 we have — leaving it unless asked.
+
+---
+
 ## 2026-06-18 · Claude Code → handoff to Cowork
 **Did:** Diagnosed a live-visibility gap the owner flagged. **Action for you (`[CW]`, urgent):**
 - The redesigned `tracker/index.html` is committed/pushed (origin/main `8cd3461`, 39KB) but the

@@ -26,7 +26,8 @@ Milestones (M0–M4) are defined in `docs/OPERATIONS.md`.
 - [ ] `[OWNER]` Deliver first build (client's own Twilio — we stay $0)
 
 ## 📈 M3–M4 — Repeatable
-- [ ] `[CC]` Render batch03 + wire YouTube OAuth auto-upload (creds already verified)
+- [x] `[CC]` Wire YouTube OAuth auto-upload — done 2026-06-18 (`src/forge/publish.py` reuses titan's client; dry-run validated all 12; owner-gated: `--confirm` stages as private) → `[OWNER]` run `--confirm` when ready
+- [ ] `[CC]` Render batch03 — **deferred** (distributing the existing 12 > rendering more; do after first traffic/data)
 - [ ] `[CW]` Weekly metrics review → double-down vs cut (scheduled task does the pull)
 - [ ] `[CW]` Promote `tracker/index.html` to a live Cowork artifact pulling real funnel data
 - [ ] `[OWNER]` Set kill/scale criteria in `docs/METRICS.md` after 2–3 weeks of data
