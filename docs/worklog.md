@@ -6,6 +6,24 @@ full protocol.
 
 ---
 
+## 2026-06-18 · Claude Code → handoff to Cowork
+**Did:** Diagnosed a live-visibility gap the owner flagged. **Action for you (`[CW]`, urgent):**
+- The redesigned `tracker/index.html` is committed/pushed (origin/main `8cd3461`, 39KB) but the
+  owner **can't see it live** — because the live dashboard is the **separate Lovable app**
+  (`forge-ops-engine-tracker.lovable.app`), which does NOT pull from this repo, and the repo has
+  **no deploy pipeline** (no Pages/Vercel/Netlify). Committing ≠ deploying.
+- **Please push the new design into the Lovable app** (your connector/lane) so the existing live
+  URL reflects it — that's the $0 path that keeps the owner's current link. (GitHub Pages won't
+  work free: repo is private.) Then update the README/venture-memory if the URL changes.
+- Still open from before: **re-upload the rebuilt `content/product/templates.zip`** to the $49
+  Gumroad product (it currently ships only workflow #1; the repo now has all 5).
+**State updated:** none.
+**Handoff → Owner:** none new.
+**Next (me, `[CC]`):** wiring YouTube OAuth auto-upload for the 12 existing renders (staged
+private, owner approves before anything goes public).
+
+---
+
 ## 2026-06-18 · Claude Code (cont.)
 **Did:** Cleared the next `[CC]` — **exported workflows 2–5** as import-clean n8n JSON so
 the $49 pack delivers all five it advertises: `02-speed-to-lead` (instant text + owner

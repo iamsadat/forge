@@ -10,6 +10,8 @@ Milestones (M0–M4) are defined in `docs/OPERATIONS.md`.
 - [ ] `[CW]` Paste real URLs into `content/links.md` once live (BIO_HUB, AFF_N8N)
 - [ ] `[OWNER]` Set Instagram bio link = the Kit landing page
 - [ ] `[CW]` Refresh dashboard snapshot once links are live
+- [ ] `[CW]` **DEPLOY the redesigned `tracker/index.html` to the live Lovable app** — owner can't see the redesign live; repo file ≠ Lovable project, no deploy pipeline (urgent)
+- [ ] `[CW]` Re-upload rebuilt `content/product/templates.zip` to the $49 Gumroad product (now has all 5 workflows)
 
 ## 💵 M1 — First $1  (prove it takes money)
 - [ ] `[CW→OWNER]` Start outreach 10–20/day — `docs/outreach.md` + `tracker/outreach-tracker.xlsx`
