@@ -3,254 +3,610 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Forge — The Ops Engine · Progress Tracker</title>
+<title>Forge — The Ops Engine · Mission Control</title>
 <style>
-  :root{
-    --bg:#0b0f17; --panel:#121826; --panel2:#0e1422; --line:#1f2937;
-    --txt:#e5e9f0; --mut:#8b97ad; --acc:#5b9dff; --ok:#34d399; --warn:#fbbf24; --idle:#64748b;
-    --grad:linear-gradient(135deg,#5b9dff,#34d399);
-  }
-  *{box-sizing:border-box} html,body{margin:0}
-  body{background:var(--bg);color:var(--txt);font:15px/1.5 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
-  a{color:var(--acc);text-decoration:none}
-  .wrap{max-width:1040px;margin:0 auto;padding:28px 20px 60px}
-  header{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;margin-bottom:22px}
-  .brand h1{margin:0;font-size:22px;letter-spacing:.2px}
-  .brand p{margin:4px 0 0;color:var(--mut);font-size:13px}
-  .ring{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 18px}
-  .ring b{font-size:26px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .ring span{color:var(--mut);font-size:12px;display:block}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:22px}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
-  .card .k{color:var(--mut);font-size:12px;text-transform:uppercase;letter-spacing:.6px}
-  .card .v{font-size:22px;font-weight:600;margin-top:4px}
-  .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
-  .tab{background:var(--panel);border:1px solid var(--line);color:var(--mut);padding:8px 16px;border-radius:10px;cursor:pointer;font-size:14px}
-  .tab.active{color:var(--txt);border-color:var(--acc);background:var(--panel2)}
-  .view{display:none} .view.active{display:block}
-  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:16px}
-  .panel h3{margin:0 0 12px;font-size:15px}
-  .phase{margin:14px 0}
-  .phase .row{display:flex;justify-content:space-between;font-size:13px;color:var(--mut);margin-bottom:6px}
-  .bar{height:9px;background:var(--panel2);border:1px solid var(--line);border-radius:99px;overflow:hidden}
-  .bar > i{display:block;height:100%;background:var(--grad)}
-  ul.clean{list-style:none;margin:0;padding:0}
-  ul.clean li{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line)}
-  ul.clean li:last-child{border-bottom:0}
-  .dot{width:9px;height:9px;border-radius:99px;margin-top:7px;flex:0 0 auto}
-  .dot.ok{background:var(--ok)} .dot.prog{background:var(--warn)} .dot.idle{background:var(--idle)}
-  .tag{font-size:11px;color:var(--mut);border:1px solid var(--line);border-radius:6px;padding:1px 7px;margin-left:6px}
-  label.todo{display:flex;gap:11px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line);cursor:pointer}
-  label.todo:last-child{border-bottom:0}
-  label.todo input{margin-top:3px;width:16px;height:16px;accent-color:var(--ok)}
-  label.todo.done span{color:var(--mut);text-decoration:line-through}
-  .who{font-size:11px;color:var(--acc);border:1px solid #243149;border-radius:6px;padding:1px 7px;margin-left:auto;white-space:nowrap}
-  .who.owner{color:var(--warn);border-color:#3a3320}
-  .tl{position:relative;padding-left:22px}
-  .tl:before{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--line)}
-  .tl .ev{position:relative;padding:6px 0 14px}
-  .tl .ev:before{content:"";position:absolute;left:-19px;top:9px;width:11px;height:11px;border-radius:99px;background:var(--acc);box-shadow:0 0 0 3px var(--bg)}
-  .tl .ev .d{font-size:12px;color:var(--mut)}
-  .tl .ev .t{font-weight:600;margin:1px 0}
-  .tl .ev .x{color:var(--mut);font-size:13px}
-  .muted{color:var(--mut)} .small{font-size:13px}
-  .stream{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
-  .stream:last-child{border-bottom:0}
-  footer{color:var(--mut);font-size:12px;text-align:center;margin-top:24px}
+/* ============ THEME : bold brand gradient ============ */
+:root{
+  --bg:#04060c; --bg2:#070b14;
+  --ink:#eef3fb; --mut:#8ea0bd; --dim:#5b6b86;
+  --line:rgba(255,255,255,.08); --line2:rgba(255,255,255,.14);
+  --glass:rgba(255,255,255,.035);
+  --cy:#22d3ee; --gr:#34d399; --mint:#7af2c8;
+  --amber:#fbbf24; --rose:#fb7185; --vio:#a78bfa;
+  --grad:linear-gradient(120deg,#22d3ee 0%,#34d399 60%,#a3e635 100%);
+  --grad2:linear-gradient(120deg,#22d3ee,#a78bfa);
+  --money:linear-gradient(120deg,#fbbf24,#34d399);
+  --shadow:0 18px 50px -20px rgba(0,0,0,.85);
+  --r:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.55 ui-sans-serif,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+.mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+a{color:var(--cy);text-decoration:none}
+h1,h2,h3{margin:0;line-height:1.1;letter-spacing:-.02em}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.money-text{background:var(--money);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* animated backdrop */
+.bg-fx{position:fixed;inset:0;z-index:-2;overflow:hidden;background:
+  radial-gradient(900px 600px at 12% -8%,rgba(34,211,238,.16),transparent 60%),
+  radial-gradient(800px 600px at 92% 4%,rgba(52,211,153,.14),transparent 60%),
+  radial-gradient(900px 700px at 60% 110%,rgba(167,139,250,.12),transparent 60%),
+  var(--bg);}
+.bg-grid{position:fixed;inset:0;z-index:-1;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:54px 54px;mask:radial-gradient(circle at 50% 30%,#000 0%,transparent 78%);opacity:.5}
+.orb{position:fixed;z-index:-1;width:520px;height:520px;border-radius:50%;filter:blur(80px);opacity:.42;animation:float 18s ease-in-out infinite}
+.orb.a{top:-160px;left:-120px;background:radial-gradient(circle,#22d3ee,transparent 70%)}
+.orb.b{bottom:-200px;right:-120px;background:radial-gradient(circle,#34d399,transparent 70%);animation-delay:-7s}
+@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,30px)}}
+
+/* layout */
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+section{padding:54px 0;scroll-margin-top:78px}
+.eyebrow{font:600 12px/1 ui-monospace,monospace;letter-spacing:.22em;text-transform:uppercase;color:var(--cy);display:flex;align-items:center;gap:9px;margin-bottom:14px}
+.eyebrow:before{content:"";width:26px;height:2px;background:var(--grad);border-radius:2px}
+.sec-title{font-size:30px;font-weight:800;margin-bottom:6px}
+.sec-sub{color:var(--mut);max-width:640px;margin-bottom:26px}
+
+/* nav */
+nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(4,6,12,.72);border-bottom:1px solid var(--line)}
+.nav-in{max-width:1180px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;gap:18px}
+.logo{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.02em;font-size:16px}
+.logo .mark{width:30px;height:30px;border-radius:9px;background:var(--grad);display:grid;place-items:center;color:#04221f;font-size:17px;box-shadow:0 0 22px rgba(52,211,153,.5)}
+.logo small{display:block;font-weight:600;font-size:10.5px;letter-spacing:.18em;color:var(--mut);text-transform:uppercase}
+.nav-links{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+.nav-links a{color:var(--mut);font-size:13.5px;font-weight:600;padding:7px 13px;border-radius:9px;transition:.2s}
+.nav-links a:hover{color:var(--ink);background:var(--glass)}
+.nav-links a.on{color:var(--ink);background:var(--glass);box-shadow:inset 0 0 0 1px var(--line2)}
+.live{display:flex;align-items:center;gap:7px;font:600 11.5px/1 ui-monospace,monospace;color:var(--gr);padding:7px 11px;border:1px solid var(--line2);border-radius:99px;white-space:nowrap}
+.live .pulse{width:8px;height:8px;border-radius:50%;background:var(--gr);box-shadow:0 0 0 0 rgba(52,211,153,.6);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(52,211,153,.55)}70%{box-shadow:0 0 0 9px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
+
+/* hero */
+.hero{padding-top:46px}
+.hero-grid{display:grid;grid-template-columns:1.25fr .85fr;gap:40px;align-items:center}
+.hero h1{font-size:clamp(38px,6vw,68px);font-weight:850;letter-spacing:-.035em}
+.hero .lead{color:var(--mut);font-size:17px;max-width:520px;margin:18px 0 24px}
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:26px}
+.chip{display:inline-flex;align-items:center;gap:7px;font:600 12px/1 ui-monospace,monospace;letter-spacing:.04em;padding:8px 13px;border-radius:99px;border:1px solid var(--line2);background:var(--glass);color:var(--ink)}
+.chip .d{width:7px;height:7px;border-radius:50%}
+.chip.live-chip{border-color:rgba(52,211,153,.4);color:var(--mint)}
+.hero-stats{display:flex;gap:26px;flex-wrap:wrap}
+.hstat .n{font:800 30px/1 ui-monospace,monospace}
+.hstat .l{color:var(--mut);font-size:12px;margin-top:5px;letter-spacing:.03em}
+
+/* progress ring */
+.ring-card{position:relative;display:grid;place-items:center;padding:14px}
+.ring-wrap{position:relative;width:260px;height:260px}
+.ring-wrap svg{transform:rotate(-90deg)}
+.ring-center{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ring-center .pct{font:850 56px/1 ui-monospace,monospace}
+.ring-center .lab{color:var(--mut);font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;margin-top:7px}
+.ring-center .ph{margin-top:10px;font-weight:700;font-size:13px;color:var(--mint)}
+
+/* cards / KPI */
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:13px}
+.kpi{background:var(--glass);border:1px solid var(--line);border-radius:var(--r);padding:16px 16px 15px;position:relative;overflow:hidden;transition:.25s;box-shadow:var(--shadow)}
+.kpi:hover{transform:translateY(-3px);border-color:var(--line2)}
+.kpi:before{content:"";position:absolute;left:0;top:0;height:3px;width:100%;background:var(--grad);opacity:.85}
+.kpi .n{font:800 28px/1 ui-monospace,monospace}
+.kpi .l{color:var(--mut);font-size:11.5px;margin-top:7px;letter-spacing:.04em;text-transform:uppercase}
+.kpi .s{color:var(--dim);font-size:11px;margin-top:3px}
+
+/* journey track */
+.journey{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:10px}
+.journey:before{content:"";position:absolute;left:6%;right:6%;top:30px;height:3px;background:var(--line);border-radius:3px}
+.journey .prog-line{position:absolute;left:6%;top:30px;height:3px;background:var(--grad);border-radius:3px;box-shadow:0 0 14px rgba(52,211,153,.6);width:0;transition:width 1.6s cubic-bezier(.3,1,.4,1)}
+.node{position:relative;background:var(--glass);border:1px solid var(--line);border-radius:var(--r);padding:50px 16px 18px;text-align:left;transition:.25s;box-shadow:var(--shadow)}
+.node:hover{transform:translateY(-4px);border-color:var(--line2)}
+.node .dot{position:absolute;top:18px;left:50%;transform:translateX(-50%);width:26px;height:26px;border-radius:50%;background:var(--bg2);border:3px solid var(--dim);display:grid;place-items:center;font-size:12px}
+.node.done .dot{border-color:var(--gr);background:var(--gr);color:#042;box-shadow:0 0 0 5px rgba(52,211,153,.16)}
+.node.active .dot{border-color:var(--cy);background:var(--cy);color:#022;box-shadow:0 0 0 5px rgba(34,211,238,.18);animation:pulse 2.2s infinite}
+.node h3{font-size:15px;margin-bottom:3px}
+.node .ph-pct{font:800 22px/1 ui-monospace,monospace;float:right}
+.node .st{font:600 10.5px/1 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:11px}
+.node.done .st{color:var(--gr)} .node.active .st{color:var(--cy)}
+.bar{height:7px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;margin:11px 0 12px}
+.bar i{display:block;height:100%;width:0;background:var(--grad);border-radius:99px;transition:width 1.4s cubic-bezier(.3,1,.4,1)}
+.node ul{list-style:none;margin:0;padding:0}
+.node li{font-size:12.3px;color:var(--mut);padding:3px 0 3px 16px;position:relative}
+.node li:before{content:"";position:absolute;left:0;top:9px;width:5px;height:5px;border-radius:50%;background:var(--gr);opacity:.8}
+.flag{margin-top:18px;display:inline-flex;align-items:center;gap:9px;font-weight:700;color:var(--amber);background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.3);border-radius:99px;padding:9px 16px}
+
+/* generic panel + grids */
+.panel{background:var(--glass);border:1px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:var(--shadow)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.row3{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+
+/* build activity */
+.commits{position:relative;padding-left:20px}
+.commits:before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.commit{position:relative;padding:9px 0;border-bottom:1px solid var(--line)}
+.commit:last-child{border-bottom:0}
+.commit:before{content:"";position:absolute;left:-19px;top:14px;width:11px;height:11px;border-radius:50%;background:var(--cy);box-shadow:0 0 0 3px var(--bg),0 0 12px rgba(34,211,238,.7)}
+.commit .t{font:600 11.5px/1 ui-monospace,monospace;color:var(--cy)}
+.commit .m{font-size:13.2px;margin-top:4px}
+.spark{display:flex;align-items:flex-end;gap:5px;height:90px;margin-top:8px}
+.spark .b{flex:1;background:var(--grad);border-radius:5px 5px 0 0;min-height:6px;opacity:.85;transition:height 1s ease;position:relative}
+.spark .b:hover{opacity:1}
+.spark .b span{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font:600 10px/1 monospace;color:var(--mut)}
+
+/* video wall */
+.wall{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.vid{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);aspect-ratio:9/16;background:
+  linear-gradient(180deg,rgba(34,211,238,.10),rgba(167,139,250,.06)),var(--bg2);
+  padding:12px;display:flex;flex-direction:column;justify-content:space-between;transition:.25s;cursor:default}
+.vid:hover{transform:translateY(-5px) scale(1.02);border-color:var(--cy);box-shadow:0 16px 40px -16px rgba(34,211,238,.5)}
+.vid .play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.1);backdrop-filter:blur(4px);border:1px solid var(--line2);display:grid;place-items:center;opacity:.85}
+.vid .pill{font:600 9.5px/1 monospace;letter-spacing:.06em;text-transform:uppercase;padding:4px 7px;border-radius:6px;background:rgba(0,0,0,.4);border:1px solid var(--line);align-self:flex-start;z-index:2}
+.vid .ttl{font-size:11.6px;font-weight:600;line-height:1.25;z-index:2;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+.vid .meta{display:flex;justify-content:space-between;font:600 10px/1 monospace;color:var(--mut);z-index:2}
+
+/* pipeline */
+.pipe{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:4px}
+.pstep{flex:1;min-width:88px;text-align:center;background:var(--glass);border:1px solid var(--line);border-radius:12px;padding:13px 8px;transition:.25s}
+.pstep:hover{border-color:var(--cy);transform:translateY(-2px)}
+.pstep .i{font-size:19px}
+.pstep .n{font-size:11.5px;font-weight:700;margin-top:5px}
+.pstep .x{font-size:10px;color:var(--dim);margin-top:2px}
+.parr{color:var(--gr);font-size:18px;opacity:.7}
+
+/* money streams + funnel */
+.streams{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.stream{border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--glass);position:relative;transition:.25s}
+.stream:hover{transform:translateY(-3px);border-color:var(--line2)}
+.stream .hd{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.stream .num{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font:800 14px/1 monospace;color:#042;background:var(--money)}
+.stream h4{font-size:14.5px;margin:0}
+.stream .stt{font:600 10px/1 monospace;letter-spacing:.08em;text-transform:uppercase;margin-left:auto;padding:4px 9px;border-radius:99px;border:1px solid var(--line2);color:var(--mut)}
+.stream p{font-size:12.6px;color:var(--mut);margin:0}
+.stream .amt{font:800 16px/1 monospace;margin-top:9px}
+.st-live{color:var(--gr)!important;border-color:rgba(52,211,153,.4)!important}
+.st-ready{color:var(--cy)!important;border-color:rgba(34,211,238,.4)!important}
+.st-soon{color:var(--dim)!important}
+
+.funnel{display:flex;flex-direction:column;gap:7px;align-items:center}
+.fstage{width:100%;text-align:center;padding:12px;border-radius:11px;border:1px solid var(--line);background:var(--glass);font-size:12.8px;position:relative;transition:.25s}
+.fstage:hover{border-color:var(--cy)}
+.fstage b{display:block;font-size:13.5px}
+.fstage small{color:var(--mut);font-size:11px}
+.fstage.s2{width:84%} .fstage.s3{width:68%} .fstage.s4{width:52%}
+.fout{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;margin-top:4px}
+.fout div{font:600 11px/1.3 monospace;text-align:center;padding:9px;border-radius:9px;border:1px dashed var(--line2);color:var(--mint)}
+
+/* checklist */
+.todo{display:flex;gap:12px;align-items:flex-start;padding:12px 4px;border-bottom:1px solid var(--line);cursor:pointer;transition:.15s}
+.todo:last-child{border-bottom:0}
+.todo input{appearance:none;-webkit-appearance:none;width:20px;height:20px;border-radius:6px;border:2px solid var(--dim);margin-top:1px;flex:0 0 auto;cursor:pointer;position:relative;transition:.2s}
+.todo input:checked{background:var(--grad);border-color:transparent}
+.todo input:checked:after{content:"✓";position:absolute;inset:0;display:grid;place-items:center;color:#042;font-size:13px;font-weight:900}
+.todo .tx{font-size:13.6px}
+.todo.checked .tx{color:var(--dim);text-decoration:line-through}
+.todo .who{margin-left:auto;font:600 10px/1 monospace;letter-spacing:.06em;color:var(--amber);border:1px solid rgba(251,191,36,.3);border-radius:99px;padding:5px 10px;white-space:nowrap}
+.launch-head{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:8px}
+.launch-prog{flex:1;min-width:200px}
+.callout{margin-top:18px;border:1px solid rgba(251,191,36,.3);background:rgba(251,191,36,.06);border-radius:14px;padding:16px 18px}
+.callout b{color:var(--amber)}
+
+/* plan */
+.plan{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.week{background:var(--glass);border:1px solid var(--line);border-radius:14px;padding:16px;transition:.25s}
+.week:hover{transform:translateY(-3px);border-color:var(--line2)}
+.week .w{font:700 11px/1 monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--cy)}
+.week h4{font-size:15px;margin:8px 0 7px}
+.week p{font-size:12.4px;color:var(--mut);margin:0}
+
+footer{padding:34px 0 60px;text-align:center;color:var(--dim);font-size:12.5px;border-top:1px solid var(--line);margin-top:20px}
+footer a{color:var(--mut)}
+
+@media(max-width:920px){
+  .hero-grid{grid-template-columns:1fr} .kpis{grid-template-columns:repeat(3,1fr)}
+  .journey{grid-template-columns:1fr 1fr} .journey:before,.journey .prog-line{display:none}
+  .wall{grid-template-columns:repeat(3,1fr)} .two,.row3{grid-template-columns:1fr}
+  .plan{grid-template-columns:1fr 1fr} .streams{grid-template-columns:1fr}
+  .nav-links{display:none}
+}
+@media(max-width:560px){.kpis{grid-template-columns:repeat(2,1fr)}.wall{grid-template-columns:repeat(2,1fr)}.journey{grid-template-columns:1fr}.plan{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <div class="brand">
-      <h1>🔧 Forge — <span style="background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent">The Ops Engine</span></h1>
-      <p id="tagline"></p>
-    </div>
-    <div class="ring">
-      <div><b id="overallPct">0%</b><span>overall progress</span></div>
-    </div>
-  </header>
+<div class="bg-fx"></div><div class="bg-grid"></div><div class="orb a"></div><div class="orb b"></div>
 
-  <div class="cards" id="cards"></div>
-
-  <div class="tabs">
-    <div class="tab active" data-v="overview">Overview</div>
-    <div class="tab" data-v="timeline">Timeline</div>
-    <div class="tab" data-v="tasks">Tasks</div>
-    <div class="tab" data-v="plan">Upcoming Plan</div>
+<nav>
+  <div class="nav-in">
+    <div class="logo">
+      <span class="mark">⬡</span>
+      <span>Forge<small>The Ops Engine</small></span>
+    </div>
+    <div class="nav-links">
+      <a href="#journey" class="on">Journey</a>
+      <a href="#build">Build</a>
+      <a href="#content">Content</a>
+      <a href="#money">Money</a>
+      <a href="#launch">Launch</a>
+      <a href="#plan">Plan</a>
+    </div>
+    <div class="live"><span class="pulse"></span><span id="clock">LIVE</span></div>
   </div>
+</nav>
 
-  <section class="view active" id="overview">
-    <div class="panel"><h3>Current state</h3><p class="small muted" id="summary"></p></div>
-    <div class="panel"><h3>Phases</h3><div id="phases"></div></div>
-    <div class="panel"><h3>Monetization streams</h3><div id="streams"></div></div>
-  </section>
+<!-- ===================== HERO ===================== -->
+<header class="hero wrap">
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow">Mission control · pre-launch</div>
+      <h1>Built to <span class="grad-text">first revenue.</span></h1>
+      <p class="lead">An AI-operated, faceless content venture that shows local service businesses the automations quietly running in the background — capturing the leads, calls and bookings they're losing.</p>
+      <div class="chips">
+        <span class="chip live-chip"><span class="d" style="background:var(--gr)"></span>2 products LIVE</span>
+        <span class="chip"><span class="d" style="background:var(--cy)"></span>12 videos shipped</span>
+        <span class="chip"><span class="d" style="background:var(--amber)"></span>$0 spent</span>
+        <span class="chip"><span class="d" style="background:var(--vio)"></span>4 revenue streams</span>
+      </div>
+      <div class="hero-stats">
+        <div class="hstat"><div class="n grad-text" data-count="9">0</div><div class="l">commits in the sprint</div></div>
+        <div class="hstat"><div class="n grad-text">5h 16m</div><div class="l">build, end-to-end</div></div>
+        <div class="hstat"><div class="n money-text">$0 <span style="font-size:18px">→ $1</span></div><div class="l">next milestone</div></div>
+      </div>
+    </div>
+    <div class="ring-card">
+      <div class="ring-wrap">
+        <svg width="260" height="260" viewBox="0 0 260 260">
+          <defs>
+            <linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#22d3ee"/><stop offset=".6" stop-color="#34d399"/><stop offset="1" stop-color="#a3e635"/>
+            </linearGradient>
+          </defs>
+          <circle cx="130" cy="130" r="112" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="18"/>
+          <circle id="ringfg" cx="130" cy="130" r="112" fill="none" stroke="url(#rg)" stroke-width="18"
+            stroke-linecap="round" stroke-dasharray="703.7" stroke-dashoffset="703.7"
+            style="filter:drop-shadow(0 0 10px rgba(52,211,153,.6))"/>
+        </svg>
+        <div class="ring-center">
+          <div class="pct grad-text"><span data-count="68">0</span>%</div>
+          <div class="lab">overall build</div>
+          <div class="ph">Phase 2 · Build</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
 
-  <section class="view" id="timeline">
-    <div class="panel"><h3>Timeline</h3><div class="tl" id="tl"></div></div>
-  </section>
+<!-- ===================== JOURNEY ===================== -->
+<section id="journey" class="wrap">
+  <div class="eyebrow">The journey to first revenue</div>
+  <h2 class="sec-title">From empty repo → revenue-ready in one sprint</h2>
+  <p class="sec-sub">Phases 0–2 are done: environment, an approved plan, and a full content + monetization build. Only Phase 3 — publishing &amp; outreach — stands between here and the first dollar.</p>
+  <div class="journey" id="journey-track">
+    <div class="prog-line" id="progline"></div>
 
-  <section class="view" id="tasks">
-    <div class="panel"><h3>✅ Completed <span class="tag" id="doneCount"></span></h3><ul class="clean" id="done"></ul></div>
-    <div class="panel"><h3>📋 To-do <span class="tag" id="todoCount"></span><span class="muted small" style="margin-left:8px">(click to check off — saved in your browser)</span></h3><div id="todo"></div></div>
-  </section>
+    <div class="node done">
+      <span class="dot">✓</span>
+      <span class="ph-pct grad-text">100%</span>
+      <h3>Phase 0</h3><div class="st">Environment · done</div>
+      <div class="bar"><i data-w="100"></i></div>
+      <ul><li>Dedicated venv + titan reuse bridge</li><li>ffmpeg · Pexels · YouTube keys verified</li><li>Metrics + memory scaffolded</li></ul>
+    </div>
 
-  <section class="view" id="plan">
-    <div class="panel"><h3>30-day plan to first revenue</h3><div class="tl" id="plan-tl"></div></div>
-  </section>
+    <div class="node done">
+      <span class="dot">✓</span>
+      <span class="ph-pct grad-text">100%</span>
+      <h3>Phase 1</h3><div class="st">Research &amp; plan · done</div>
+      <div class="bar"><i data-w="100"></i></div>
+      <ul><li>5 niches scored on live data</li><li>Niche locked: SMB automation</li><li>Brand: The Ops Engine · plan approved</li></ul>
+    </div>
 
-  <footer>Forge venture · $0 spend until first revenue · updated <span id="updated"></span> · <a href="https://github.com/iamsadat/forge" style="color:var(--mut)">github.com/iamsadat/forge</a> · static tracker (no backend)</footer>
-</div>
+    <div class="node active">
+      <span class="dot">●</span>
+      <span class="ph-pct grad-text">70%</span>
+      <h3>Phase 2</h3><div class="st">Build · in progress</div>
+      <div class="bar"><i data-w="70"></i></div>
+      <ul><li>12 scripts + 12 rendered videos</li><li>4-stream monetization + funnel</li><li>2 Gumroad products live · repo pushed</li></ul>
+    </div>
+
+    <div class="node">
+      <span class="dot">3</span>
+      <span class="ph-pct" style="color:var(--dim)">0%</span>
+      <h3>Phase 3</h3><div class="st">Launch &amp; revenue · next</div>
+      <div class="bar"><i data-w="2"></i></div>
+      <ul><li>Wire funnel + publish daily</li><li>Service outreach 10–20/day</li><li>First $300–1,500 build</li></ul>
+    </div>
+  </div>
+  <div style="text-align:center"><span class="flag">🎯 Next checkpoint — first revenue</span></div>
+</section>
+
+<!-- ===================== KPIs ===================== -->
+<section class="wrap" style="padding-top:8px">
+  <div class="kpis">
+    <div class="kpi"><div class="n grad-text"><span data-count="12">0</span></div><div class="l">Videos rendered</div><div class="s">ffprobe-verified MP4s</div></div>
+    <div class="kpi"><div class="n grad-text">4:42</div><div class="l">Finished content</div><div class="s">12 vertical shorts</div></div>
+    <div class="kpi"><div class="n grad-text"><span data-count="104">0</span></div><div class="l">B-roll clips</div><div class="s">Pexels, $0 cost</div></div>
+    <div class="kpi"><div class="n grad-text"><span data-count="12">0</span></div><div class="l">Scripts written</div><div class="s">batch 01 + 02</div></div>
+    <div class="kpi"><div class="n grad-text"><span data-count="9">0</span></div><div class="l">Git commits</div><div class="s">in one sprint</div></div>
+    <div class="kpi"><div class="n money-text">$<span data-count="49">0</span></div><div class="l">Flagship product</div><div class="s">intro $29 · LAUNCH</div></div>
+    <div class="kpi"><div class="n grad-text"><span data-count="5">0</span></div><div class="l">Email nurture</div><div class="s">paste-ready sequence</div></div>
+    <div class="kpi"><div class="n grad-text"><span data-count="4">0</span></div><div class="l">Revenue streams</div><div class="s">stacked, not single</div></div>
+    <div class="kpi"><div class="n money-text">$<span data-count="0">0</span></div><div class="l">Total spend</div><div class="s">free tiers only</div></div>
+    <div class="kpi"><div class="n grad-text"><span data-count="38">0</span></div><div class="l">Files in repo</div><div class="s">+12 MP4 deliverables</div></div>
+  </div>
+</section>
+
+<!-- ===================== BUILD ACTIVITY ===================== -->
+<section id="build" class="wrap">
+  <div class="eyebrow">Build activity</div>
+  <h2 class="sec-title">The whole venture, shipped in an afternoon</h2>
+  <p class="sec-sub">9 commits between 15:10 and 20:26 on June 17 — scaffold to two live products. <span style="color:var(--cy)">Connect GitHub (run <span class="mono">/mcp</span>) to upgrade this panel to live commit data.</span></p>
+  <div class="row3">
+    <div class="panel">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <strong style="font-size:14px">Commit feed</strong>
+        <span class="mono" style="font-size:10.5px;color:var(--dim);border:1px solid var(--line);border-radius:99px;padding:4px 9px">snapshot · github.com/iamsadat/forge</span>
+      </div>
+      <div class="commits" id="commits"></div>
+    </div>
+    <div class="panel">
+      <strong style="font-size:14px">Commits across the sprint</strong>
+      <p style="color:var(--mut);font-size:12.4px;margin:6px 0 0">Hourly cadence, 15:00 → 20:30</p>
+      <div class="spark" id="spark"></div>
+      <div style="display:flex;justify-content:space-between;font:600 10px/1 monospace;color:var(--dim);margin-top:8px">
+        <span>15h</span><span>16h</span><span>17h</span><span>18h</span><span>19h</span><span>20h</span>
+      </div>
+      <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div><div class="grad-text mono" style="font-size:22px;font-weight:800">168</div><div style="color:var(--mut);font-size:11px">lines of venture code</div></div>
+        <div><div class="grad-text mono" style="font-size:22px;font-weight:800">100%</div><div style="color:var(--mut);font-size:11px">renders verified valid</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTENT ENGINE ===================== -->
+<section id="content" class="wrap">
+  <div class="eyebrow">The content engine</div>
+  <h2 class="sec-title">An AI-operated render factory</h2>
+  <p class="sec-sub">A script becomes a captioned, voiced, vertical video with zero human in the loop — reusing the battle-tested titan pipeline through a clean bridge.</p>
+  <div class="panel" style="margin-bottom:18px">
+    <div class="pipe">
+      <div class="pstep"><div class="i">📝</div><div class="n">Script</div><div class="x">pillar format</div></div>
+      <span class="parr">→</span>
+      <div class="pstep"><div class="i">🎙️</div><div class="n">edge-tts</div><div class="x">voiceover</div></div>
+      <span class="parr">→</span>
+      <div class="pstep"><div class="i">💬</div><div class="n">Captions</div><div class="x">karaoke ASS</div></div>
+      <span class="parr">→</span>
+      <div class="pstep"><div class="i">🎞️</div><div class="n">B-roll</div><div class="x">Pexels match</div></div>
+      <span class="parr">→</span>
+      <div class="pstep"><div class="i">⚙️</div><div class="n">ffmpeg</div><div class="x">compose</div></div>
+      <span class="parr">→</span>
+      <div class="pstep"><div class="i">📲</div><div class="n">MP4</div><div class="x">9:16 short</div></div>
+    </div>
+  </div>
+  <div class="wall" id="wall"></div>
+  <div class="panel" style="margin-top:18px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+      <strong style="font-size:14px">Runtime per video</strong>
+      <span style="color:var(--mut);font-size:12px">avg <b class="grad-text mono">23.5s</b> · total <b class="grad-text mono">4:42</b></span>
+    </div>
+    <div class="spark" id="durbars" style="height:80px"></div>
+  </div>
+</section>
+
+<!-- ===================== MONEY ===================== -->
+<section id="money" class="wrap">
+  <div class="eyebrow">The money map</div>
+  <h2 class="sec-title">Four stacked streams, one funnel</h2>
+  <p class="sec-sub">Every video drives to one bio link. From there a single funnel monetizes four ways — designed so a free magnet, a $49 product, recurring affiliate, and done-for-you service all share the same audience.</p>
+  <div class="two">
+    <div>
+      <div class="streams">
+        <div class="stream"><div class="hd"><span class="num">1</span><h4>Affiliate (recurring)</h4><span class="stt st-ready">applied</span></div><p>n8n 30% / 12mo, GoHighLevel, Kit — the tools featured in every build.</p><div class="amt grad-text">30% recurring</div></div>
+        <div class="stream"><div class="hd"><span class="num">2</span><h4>$49 Template Pack</h4><span class="stt st-live">live</span></div><p>5 plug-and-play automations on Gumroad. Intro $29 with code LAUNCH.</p><div class="amt money-text">$29–49 / sale</div></div>
+        <div class="stream"><div class="hd"><span class="num">3</span><h4>Done-for-you service</h4><span class="stt st-ready">offer ready</span></div><p>"Missed-Call Money Recovery" builds — the real first-revenue engine.</p><div class="amt money-text">$300–1,500</div></div>
+        <div class="stream"><div class="hd"><span class="num">4</span><h4>Ad revenue</h4><span class="stt st-soon">later</span></div><p>Shorts RPM is a bonus; long-form added once the channel matures.</p><div class="amt" style="color:var(--dim)">bonus</div></div>
+      </div>
+      <div class="panel" style="margin-top:14px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px">
+          <strong style="font-size:13.5px">Illustrative 90-day target</strong>
+          <span style="font:600 10px/1 monospace;color:var(--dim)">target · not actuals</span>
+        </div>
+        <svg id="projchart" viewBox="0 0 420 130" width="100%" height="130" preserveAspectRatio="none" style="margin-top:6px"></svg>
+        <div style="display:flex;justify-content:space-between;font:600 10px/1 monospace;color:var(--dim);margin-top:2px"><span>Day 0</span><span>30</span><span>60</span><span>90</span></div>
+      </div>
+    </div>
+    <div class="panel">
+      <strong style="font-size:14px">The funnel</strong>
+      <p style="color:var(--mut);font-size:12px;margin:6px 0 16px">One link in bio → email → nurture → four ways to pay.</p>
+      <div class="funnel">
+        <div class="fstage s1"><b>📱 Instagram / Shorts / Reels</b><small>12 videos · CTA "link in bio"</small></div>
+        <div class="fstage s2"><b>🧲 Kit landing page</b><small>free missed-call automation → email captured</small></div>
+        <div class="fstage s3"><b>✉️ 5-email nurture</b><small>cost → pack → tool → proof → service</small></div>
+        <div class="fstage s4"><b>💸 Conversion</b><small>buy · book · sign up</small></div>
+        <div class="fout">
+          <div>Free magnet</div><div>$49 pack</div><div>n8n affiliate</div><div>DFY $300–1,500</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== LAUNCH ===================== -->
+<section id="launch" class="wrap">
+  <div class="eyebrow">Go-live checklist</div>
+  <h2 class="sec-title">What stands between you and $1</h2>
+  <p class="sec-sub">The build is done. Everything left is owner-gated and free — wiring the funnel and turning on distribution. Check items off as you go (saved in your browser).</p>
+  <div class="panel">
+    <div class="launch-head">
+      <strong style="font-size:14px">Owner actions</strong>
+      <span class="launch-prog"><span class="bar" style="margin:0"><i id="todobar" style="width:0"></i></span></span>
+      <span class="mono" id="todocount" style="font-size:12px;color:var(--mut)">0 / 7 done</span>
+    </div>
+    <div id="todos"></div>
+    <div class="callout">
+      <b>The fast path:</b> the done-for-you service needs no audience. 10–20 cold outreaches/day from the kit can book a <b>$300–1,500</b> build in week 2 — likely the first money in, while content + funnel compound behind it.
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PLAN ===================== -->
+<section id="plan" class="wrap" style="padding-top:10px">
+  <div class="eyebrow">30-day plan</div>
+  <h2 class="sec-title">The next four weeks</h2>
+  <div class="plan">
+    <div class="week"><div class="w">Week 1</div><h4>Wire it up</h4><p>Kit landing page live, paste real links, Gumroad↔Kit connected, IG bio set. Publish first reels.</p></div>
+    <div class="week"><div class="w">Week 2</div><h4>First revenue push</h4><p>Publish daily; outreach 10–20/day across verticals; target first $300–500 service sale.</p></div>
+    <div class="week"><div class="w">Week 3</div><h4>Productize</h4><p>Push the $49 pack; double down on best-performing angles; book audit calls.</p></div>
+    <div class="week"><div class="w">Week 4</div><h4>Make it repeatable</h4><p>Measure CTR / retention / funnel; 1+ service client + first affiliate or product sale; set kill/scale calls.</p></div>
+  </div>
+</section>
+
+<footer>
+  Forge · The Ops Engine — venture mission control · <b style="color:var(--gr)">$0 spend</b> until first revenue ·
+  <a href="https://github.com/iamsadat/forge">github.com/iamsadat/forge</a> · self-contained · works offline
+</footer>
 
 <script>
-window.STATE = {
-  tagline: "Faceless automations that run service businesses in the background — built to first revenue, fast.",
-  updated: "2026-06-18",
-  cards: [
-    {k:"Phase", v:"2 · Build"},
-    {k:"Budget spent", v:"$0"},
-    {k:"Revenue", v:"$0"},
-    {k:"Scripts", v:"12"},
-    {k:"Videos rendered", v:"12"},
-    {k:"Streams wired", v:"4"}
-  ],
-  summary: "Phases 0–1 complete (environment + approved plan). Niche: AI automations for local service businesses; brand 'The Ops Engine'. 12 scripts + 12 ffprobe-verified vertical renders via the reused titan pipeline; repo live on GitHub (private). FUNNEL IS NOW LIVE end-to-end, built via browser automation: Gumroad has the free Missed-Call magnet + the $49 Pack (intro $29 via LAUNCH); Kit has a published landing page (the-ops-engine.kit.com/free-automation) that captures the email, sends a reframed confirmation that delivers the free product, and an ACTIVE automation that tags new leads 'free-magnet' and enrolls them in a 5-email 'Magnet Nurture' sequence (Day 1/3/6/9/12) selling the $49 Pack, the n8n affiliate, and the done-for-you service. Left: wire Gumroad→Kit (needs Kit API key paste), set the IG bio link, then publish Reels + outreach to drive traffic → first revenue. Kit sequences/automations are free during the 14-day trial (plan decision after). $0 spent.",
-  phases: [
-    {name:"Phase 0 — Environment", pct:100, note:"venv, titan reuse bridge, keys verified, trackers"},
-    {name:"Phase 1 — Research & Plan", pct:100, note:"5 niches scored, plan approved, niche + brand locked"},
-    {name:"Phase 2 — Build", pct:95, note:"12 scripts + 12 renders + monetization + Gumroad live + Kit funnel built & ACTIVE; only Gumroad↔Kit wiring left"},
-    {name:"Phase 3 — Launch & Revenue", pct:10, note:"funnel live end-to-end; set IG bio link + publish Reels + outreach → first revenue"}
-  ],
-  streams: [
-    {name:"1 · Affiliate (recurring SaaS)", status:"ready to apply", cls:"prog", note:"n8n 30%/12mo, GoHighLevel, Kit"},
-    {name:"2 · $49 template pack", status:"spec'd", cls:"prog", note:"export workflows → Gumroad"},
-    {name:"3 · Done-for-you service", status:"offer drafted", cls:"prog", note:"first-revenue engine via outreach"},
-    {name:"4 · Ad revenue", status:"later", cls:"idle", note:"shorts RPM trivial; long-form later"}
-  ],
-  timeline: [
-    {d:"2026-06-16", t:"Phase 0 complete", x:"Venture scaffolded; dedicated WSL venv; titan reuse bridge; ffmpeg + Pexels + YouTube keys verified; metrics + memory."},
-    {d:"2026-06-16", t:"Phase 1 research", x:"Scored 5 niches on current data; shorts-RPM insight reframes to streams 1–3; competitor teardown."},
-    {d:"2026-06-17", t:"Niche + brand locked", x:"SMB automation, horizontal service offer; studio brand 'The Ops Engine'."},
-    {d:"2026-06-17", t:"Creative + scripts", x:"Brand standard + content pillars; 6 scripts (batch01) in pipeline format."},
-    {d:"2026-06-17", t:"Render pipeline fixed", x:"Closed faceless b-roll coverage gap; rendered + verified video #1 (1.6MB MP4) on WSL."},
-    {d:"2026-06-17", t:"Monetization + publishing", x:"4-stream architecture, affiliate targets, links config, per-video SEO metadata."},
-    {d:"2026-06-17", t:"Progress tracker built", x:"This interactive tracker; repo made commit-ready."},
-    {d:"2026-06-17", t:"Batch02 rendered", x:"6 more scripts written + rendered; all 12 videos ffprobe-verified valid (booking, DMs, reactivation, invoices, follow-up, speed-to-lead)."},
-    {d:"2026-06-17", t:"Pushed to GitHub", x:"Repo live (private) at github.com/iamsadat/forge — source, docs, tracker + 12 final MP4s; 2.3GB stock cache & secrets gitignored."},
-    {d:"2026-06-17", t:"Accounts created", x:"Owner created Instagram, Gumroad, Kit + applied to n8n affiliate. Funnel can now be wired."},
-    {d:"2026-06-17", t:"Funnel playbook", x:"docs/funnel-setup.md: Kit landing page as bio hub, Gumroad↔Kit wiring, paste-ready product + 5-email nurture copy, free-magnet guide."},
-    {d:"2026-06-17", t:"Gumroad live", x:"Both products published (titanessence): free Missed-Call magnet + $49 Pack w/ files; LAUNCH code = $20 off → $29 intro. Built via browser automation."},
-    {d:"2026-06-18", t:"Kit funnel LIVE", x:"Built via browser automation: landing page the-ops-engine.kit.com/free-automation (opt-in → confirm email → free Gumroad redirect); 5-email 'Magnet Nurture' sequence (Day 1/3/6/9/12) published; automation ACTIVE (join form → tag free-magnet → enroll). Sequences/automations free during 14-day Kit trial (paid after)."}
-  ],
-  done: [
-    {t:"Scaffold venture project + dedicated venv", tag:"phase 0"},
-    {t:"Reuse bridge to titan pipeline (no copy, no secret duplication)", tag:"phase 0"},
-    {t:"Verify ffmpeg + Pexels + YouTube keys", tag:"phase 0"},
-    {t:"Metrics tracker + venture memory", tag:"phase 0"},
-    {t:"Research + score 5 niches (current data)", tag:"phase 1"},
-    {t:"Business plan + owner sign-off", tag:"phase 1"},
-    {t:"Lock niche (SMB automation) + brand (The Ops Engine)", tag:"phase 1"},
-    {t:"Brand standard + content pillars", tag:"phase 2"},
-    {t:"Write 12 scripts (batch01 + batch02)", tag:"phase 2"},
-    {t:"Fix render pipeline for faceless b-roll coverage", tag:"phase 2"},
-    {t:"Render + ffprobe-verify all 12 videos", tag:"phase 2"},
-    {t:"Monetization architecture (4 streams)", tag:"phase 2"},
-    {t:"Publishing + SEO metadata", tag:"phase 2"},
-    {t:"Outreach kit (cold email/DM/call + pricing ladder)", tag:"phase 2"},
-    {t:"Flagship importable n8n workflow (missed-call text-back)", tag:"phase 2"},
-    {t:"Push repo to GitHub (github.com/iamsadat/forge)", tag:"phase 2"},
-    {t:"Accounts created: Instagram, Gumroad, Kit + n8n affiliate applied", tag:"phase 2"},
-    {t:"Funnel playbook + paste-ready copy (docs/funnel-setup.md)", tag:"phase 2"},
-    {t:"Gumroad: free magnet + $49 pack published (files, descriptions, LAUNCH code)", tag:"funnel"},
-    {t:"Kit landing page built + published (BIO_HUB = the-ops-engine.kit.com/free-automation)", tag:"funnel"},
-    {t:"Kit incentive email reframed → delivers free Gumroad product on confirm", tag:"funnel"},
-    {t:"Kit 'Magnet Nurture' 5-email sequence published (Day 1/3/6/9/12)", tag:"funnel"},
-    {t:"Kit automation ACTIVE: join form → tag free-magnet → enroll in nurture", tag:"funnel"}
-  ],
-  todo: [
-    {id:"wire", t:"Gumroad → Kit integration (per product): tag free-magnet / customer — needs Kit API key paste", who:"OWNER"},
-    {id:"bio", t:"Set Instagram bio link = the-ops-engine.kit.com/free-automation", who:"OWNER"},
-    {id:"test", t:"End-to-end test: opt-in → confirm → free download → nurture fires", who:"OWNER"},
-    {id:"n8n", t:"Swap n8n.io → affiliate link in Kit nurture Email 3 once approved", who:"OWNER"},
-    {id:"kitplan", t:"Decide Kit plan before trial ends (~Jul 2) to keep automation + sequence running", who:"OWNER"},
-    {id:"publish", t:"Publish first Reels (3–4/wk) — CTA 'link in bio'", who:"OWNER"},
-    {id:"outreach", t:"Start service outreach 10–20/day (docs/outreach.md)", who:"OWNER"}
-  ],
-  plan: [
-    {d:"Week 1", t:"Foundation", x:"Confirm brand + handles; create free accounts; lead magnet + bio hub; 10 scripts; 5–10 renders."},
-    {d:"Week 2", t:"First revenue push", x:"Publish daily; start outreach 10–20/day across verticals; target first $300–500 service sale; apply n8n affiliate."},
-    {d:"Week 3", t:"Productize", x:"Launch $49 template pack on Gumroad; double down on best-performing short angles; book audit calls."},
-    {d:"Week 4", t:"Repeatable", x:"Measure CTR/retention/funnel; aim 1+ service client + first affiliate/product sale; set kill/scale calls."}
-  ]
-};
+/* ===================== DATA ===================== */
+var COMMITS=[
+  {t:"20:26",m:"Gumroad live — real product URLs (free magnet + $49 pack + LAUNCH code)"},
+  {t:"20:15",m:"gitignore product packaging zips (regenerable from source)"},
+  {t:"19:38",m:"Funnel setup: connection playbook, free magnet, links + tracker"},
+  {t:"16:44",m:"Reflect GitHub push: README, tracker, venture-memory"},
+  {t:"16:42",m:"Include 12 final rendered videos in repo (deliverables)"},
+  {t:"15:23",m:"batch02: 6 more renders — 12 videos verified + n8n workflow"},
+  {t:"15:18",m:"Service outreach kit + script batch02 (6 scripts)"},
+  {t:"15:16",m:"Phase 2: render batch01 (6 videos) + $49 product pack"},
+  {t:"15:10",m:"Forge venture scaffold — reuse bridge, scripts, render pipeline"}
+];
+var SPARK=[4,2,0,0,1,2];
+var VIDEOS=[
+  {t:"The $50,000 Leak in Your Missed Calls",d:34.4,s:"1.6M",p:"Leak"},
+  {t:"You Lose the Lead in the First 5 Minutes",d:23.3,s:"808K",p:"Leak"},
+  {t:"The Quiet Reason Your Competitor Outranks You",d:24.7,s:"1.9M",p:"SEO"},
+  {t:"Fire the $2,000 Task — Not the Person",d:25.8,s:"1.4M",p:"Tool"},
+  {t:"3 Automations Every Local Business Should Steal",d:25.1,s:"1.2M",p:"Fix"},
+  {t:"The No-Show That Costs You $300 a Week",d:24.0,s:"2.1M",p:"Leak"},
+  {t:"Your Booking Page Is Costing You Customers",d:22.2,s:"2.1M",p:"Leak"},
+  {t:"Stop Letting Leads Die in Your DMs",d:19.1,s:"1.7M",p:"Fix"},
+  {t:"The Follow-Up Most Businesses Never Send",d:20.4,s:"1.6M",p:"Leak"},
+  {t:"Why Your Invoices Get Paid Late",d:21.5,s:"1.7M",p:"Leak"},
+  {t:"You Don't Need More Leads — You Need This",d:18.9,s:"1.3M",p:"Fix"},
+  {t:"The 1 Number Every Local Business Should Track",d:22.9,s:"2.0M",p:"Metric"}
+];
+var TODOS=[
+  {id:"kit",t:"Kit: build landing page (bio hub) + incentive email + 5-email nurture"},
+  {id:"wire",t:"Connect Gumroad → Kit (API key, tags free-magnet / customer)"},
+  {id:"links",t:"Paste real URLs into links.md (BIO_HUB, AFF_N8N)"},
+  {id:"bio",t:"Set Instagram bio link = Kit landing page"},
+  {id:"publish",t:"Publish first reels (3–4/wk) — CTA “link in bio”"},
+  {id:"outreach",t:"Start service outreach — 10–20 businesses/day"},
+  {id:"affiliate",t:"Confirm n8n affiliate acceptance + drop link in nurture"}
+];
+
+/* ===================== RENDER ===================== */
+var $=function(s){return document.querySelector(s)};
+var pillarColor={Leak:"#fb7185",Fix:"#34d399",Tool:"#a78bfa",SEO:"#22d3ee",Metric:"#fbbf24"};
+
+$("#commits").innerHTML=COMMITS.map(function(c){
+  return '<div class="commit"><div class="t">'+c.t+'</div><div class="m">'+c.m+'</div></div>';
+}).join("");
+
+var mx=Math.max.apply(null,SPARK);
+$("#spark").innerHTML=SPARK.map(function(v){
+  return '<div class="b" data-h="'+(v/mx*100)+'" style="height:0"><span>'+v+'</span></div>';
+}).join("");
+
+$("#wall").innerHTML=VIDEOS.map(function(v){
+  var c=pillarColor[v.p]||"#22d3ee";
+  return '<div class="vid"><span class="pill" style="color:'+c+';border-color:'+c+'44">'+v.p+'</span>'+
+    '<span class="play">▶</span>'+
+    '<div><div class="ttl">'+v.t+'</div><div class="meta" style="margin-top:7px"><span>'+v.d.toFixed(0)+'s</span><span>'+v.s+'</span></div></div></div>';
+}).join("");
+
+var dmax=Math.max.apply(null,VIDEOS.map(function(v){return v.d}));
+$("#durbars").innerHTML=VIDEOS.map(function(v){
+  return '<div class="b" data-h="'+(v.d/dmax*100)+'" style="height:0;background:linear-gradient(180deg,#22d3ee,#34d399)" title="'+v.t+' — '+v.d+'s"></div>';
+}).join("");
 
 (function(){
-  var S = window.STATE, $ = function(id){return document.getElementById(id)};
-  $("tagline").textContent = S.tagline;
-  $("updated").textContent = S.updated;
-
-  // overall = weighted avg of phase pcts
-  var overall = Math.round(S.phases.reduce(function(a,p){return a+p.pct},0)/S.phases.length);
-  $("overallPct").textContent = overall + "%";
-
-  $("cards").innerHTML = S.cards.map(function(c){
-    return '<div class="card"><div class="k">'+c.k+'</div><div class="v">'+c.v+'</div></div>';
-  }).join("");
-
-  $("summary").textContent = S.summary;
-
-  $("phases").innerHTML = S.phases.map(function(p){
-    return '<div class="phase"><div class="row"><span>'+p.name+' · '+p.note+'</span><span>'+p.pct+'%</span></div>'+
-           '<div class="bar"><i style="width:'+p.pct+'%"></i></div></div>';
-  }).join("");
-
-  $("streams").innerHTML = S.streams.map(function(s){
-    return '<div class="stream"><span class="dot '+s.cls+'"></span><b>'+s.name+'</b>'+
-           '<span class="tag">'+s.status+'</span><span class="muted small" style="margin-left:auto">'+s.note+'</span></div>';
-  }).join("");
-
-  $("tl").innerHTML = S.timeline.map(function(e){
-    return '<div class="ev"><div class="d">'+e.d+'</div><div class="t">'+e.t+'</div><div class="x">'+e.x+'</div></div>';
-  }).join("");
-
-  $("done").innerHTML = S.done.map(function(d){
-    return '<li><span class="dot ok"></span><span>'+d.t+'<span class="tag">'+d.tag+'</span></span></li>';
-  }).join("");
-  $("doneCount").textContent = S.done.length;
-
-  // to-do with localStorage persistence
-  var KEY="forge_todo_v1";
-  var saved = {}; try{saved = JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
-  function render(){
-    $("todo").innerHTML = S.todo.map(function(t){
-      var on = !!saved[t.id];
-      var ownerCls = /OWNER/.test(t.who) ? "who owner" : "who";
-      return '<label class="todo'+(on?' done':'')+'"><input type="checkbox" data-id="'+t.id+'"'+(on?' checked':'')+'>'+
-             '<span>'+t.t+'</span><span class="'+ownerCls+'">'+t.who+'</span></label>';
-    }).join("");
-    var open = S.todo.filter(function(t){return !saved[t.id]}).length;
-    $("todoCount").textContent = open + " open";
-    Array.prototype.forEach.call(document.querySelectorAll('#todo input'),function(cb){
-      cb.addEventListener('change',function(){
-        saved[cb.dataset.id]=cb.checked; localStorage.setItem(KEY,JSON.stringify(saved)); render();
-      });
-    });
-  }
-  render();
-
-  $("plan-tl").innerHTML = S.plan.map(function(e){
-    return '<div class="ev"><div class="d">'+e.d+'</div><div class="t">'+e.t+'</div><div class="x">'+e.x+'</div></div>';
-  }).join("");
-
-  Array.prototype.forEach.call(document.querySelectorAll('.tab'),function(tab){
-    tab.addEventListener('click',function(){
-      document.querySelector('.tab.active').classList.remove('active');
-      document.querySelector('.view.active').classList.remove('active');
-      tab.classList.add('active');
-      document.getElementById(tab.dataset.v).classList.add('active');
-    });
-  });
+  var pts=[[0,0],[30,1200],[60,3500],[90,7000]], W=420,H=130,maxY=7000,pad=8;
+  function X(d){return pad+(d/90)*(W-2*pad)}
+  function Y(v){return H-pad-(v/maxY)*(H-2*pad)}
+  var line=pts.map(function(p,i){return (i?'L':'M')+X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1)}).join(' ');
+  var area=line+' L'+X(90)+' '+(H-pad)+' L'+X(0)+' '+(H-pad)+' Z';
+  var dots=pts.map(function(p){return '<circle cx="'+X(p[0])+'" cy="'+Y(p[1])+'" r="3.2" fill="#34d399"/>'}).join('');
+  $("#projchart").innerHTML=
+    '<defs><linearGradient id="pa" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34d399" stop-opacity=".35"/><stop offset="1" stop-color="#34d399" stop-opacity="0"/></linearGradient></defs>'+
+    '<path d="'+area+'" fill="url(#pa)"/>'+
+    '<path d="'+line+'" fill="none" stroke="#34d399" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 0 5px rgba(52,211,153,.6))"/>'+dots+
+    '<text x="'+X(90)+'" y="'+(Y(7000)-7)+'" text-anchor="end" font-size="11" font-family="monospace" fill="#7af2c8" font-weight="700">$7k</text>';
 })();
+
+var KEY="forge_launch_v2", saved={}; try{saved=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
+function renderTodos(){
+  $("#todos").innerHTML=TODOS.map(function(t){
+    var on=!!saved[t.id];
+    return '<label class="todo'+(on?' checked':'')+'"><input type="checkbox" data-id="'+t.id+'"'+(on?' checked':'')+'>'+
+      '<span class="tx">'+t.t+'</span><span class="who">OWNER</span></label>';
+  }).join("");
+  var done=TODOS.filter(function(t){return saved[t.id]}).length;
+  $("#todocount").textContent=done+" / "+TODOS.length+" done";
+  $("#todobar").style.width=(done/TODOS.length*100)+"%";
+  document.querySelectorAll('#todos input').forEach(function(cb){
+    cb.addEventListener('change',function(){saved[cb.dataset.id]=cb.checked;localStorage.setItem(KEY,JSON.stringify(saved));renderTodos()});
+  });
+}
+renderTodos();
+
+(function(){var c=$("#clock");function tick(){var d=new Date();c.textContent=d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'})}tick();setInterval(tick,1000)})();
+
+/* ===================== ANIMATION ===================== */
+function countUp(el){
+  var target=+el.getAttribute('data-count'),dur=1300,t0=null;
+  function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/dur,1);var e=1-Math.pow(1-p,3);
+    el.textContent=Math.round(target*e);if(p<1)requestAnimationFrame(step);else el.textContent=target;}
+  requestAnimationFrame(step);
+}
+function fillRing(){var r=$("#ringfg");r.style.transition="stroke-dashoffset 1.8s cubic-bezier(.3,1,.4,1)";r.style.strokeDashoffset=703.7*(1-0.68);}
+
+var seen={};
+var io=new IntersectionObserver(function(es){
+  es.forEach(function(en){
+    if(!en.isIntersecting)return;var el=en.target,id=el.dataset._id;
+    if(seen[id])return;seen[id]=1;
+    if(el.hasAttribute('data-count'))countUp(el);
+    if(el.classList.contains('b'))el.style.height=el.getAttribute('data-h')+'%';
+  });
+},{threshold:.4});
+var idc=0;
+document.querySelectorAll('[data-count], .spark .b').forEach(function(el){el.dataset._id=++idc;io.observe(el)});
+
+var jio=new IntersectionObserver(function(es){
+  es.forEach(function(en){if(!en.isIntersecting)return;
+    document.querySelectorAll('.node .bar i').forEach(function(i){i.style.width=i.getAttribute('data-w')+'%'});
+    $("#progline").style.width="56%";
+    jio.disconnect();
+  });
+},{threshold:.3});
+jio.observe($("#journey-track"));
+
+window.addEventListener('load',function(){
+  setTimeout(fillRing,250);
+  document.querySelectorAll('.hero [data-count]').forEach(countUp);
+});
+
+var links={};document.querySelectorAll('.nav-links a').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+var secs=['journey','build','content','money','launch','plan'].map(function(id){return document.getElementById(id)});
+var nio=new IntersectionObserver(function(es){
+  es.forEach(function(en){if(en.isIntersecting){
+    for(var k in links)links[k].classList.remove('on');
+    if(links[en.target.id])links[en.target.id].classList.add('on');
+  }});
+},{rootMargin:"-45% 0px -50% 0px"});
+secs.forEach(function(s){if(s)nio.observe(s)});
 </script>
 </body>
 </html>
