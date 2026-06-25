@@ -6,6 +6,24 @@ full protocol.
 
 ---
 
+## 2026-06-19 · Cowork (cont.)
+**Did:**
+- **Fixed Gumroad↔Kit** — owner's "Connect" button silently fails (blocked OAuth popup);
+  authorized via the direct endpoint `app.kit.com/auth/gumroad`. Integration now connected.
+- Built **outreach batch 01** (`docs/outreach-batch-01.md`): 6 real Austin handyman prospects
+  (Google Maps, ICP-fit, leaning small) each with a personalized cold email — loaded into
+  `tracker/outreach-tracker.xlsx` (status "To contact"). Staged for owner to send.
+- Refreshed dashboard: overall 80%, Phase 3 @25%, funnel "Gumroad↔Kit synced", go-live
+  checklist trimmed to the 5 real remaining owner actions.
+**State updated:** none ($0/$0). Funnel plumbing complete except IG bio.
+**Handoff → Owner:** (1) log into Instagram + set bio link (I can't — login wall, no creds);
+(2) send outreach batch 01; (3) decide on Kit paid plan before the ~6-day trial ends ($0 rule).
+**Handoff → Claude Code:** mark backlog M0 "Connect Gumroad→Kit" done; reconcile shared copy
+(`git add -A && git commit && git pull`).
+**Next:** owner sends batch 01 → log first replies in METRICS.md → first audit booked.
+
+---
+
 ## 2026-06-19 · Cowork
 **Did:**
 - Pushed all 6 operating-system files to GitHub via the browser (3 `[CW]` commits) — repo now
