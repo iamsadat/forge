@@ -231,6 +231,7 @@ footer a{color:var(--mut)}
       <a href="#money">Money</a>
       <a href="#launch">Launch</a>
       <a href="#plan">Plan</a>
+      <a href="#structure">Structure</a>
     </div>
     <div class="live"><span class="pulse"></span><span id="clock">LIVE</span></div>
   </div>
@@ -463,6 +464,64 @@ footer a{color:var(--mut)}
   </div>
 </section>
 
+<!-- ===================== STRUCTURE · MANAGER VIEW ===================== -->
+<section id="structure" class="wrap">
+  <div class="eyebrow">Project structure · manager view</div>
+  <h2 class="sec-title">One venture, two repos — no more overlap</h2>
+  <p class="sec-sub">The rule of thumb: if it's the <b>video machine</b>, it's <span class="grad-text">titan</span>; if it's the <b>business</b>, it's <span class="grad-text">forge</span>. titan is reused, never rebuilt.</p>
+
+  <div class="two" style="margin-bottom:16px">
+    <div class="panel">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="font-size:20px">⚙️</span><strong style="font-size:15px">titan/ — the engine (reused)</strong></div>
+      <p style="color:var(--mut);font-size:13px;margin:0 0 10px">Battle-tested faceless-video pipeline, a sibling repo. Script → edge-tts voiceover → karaoke captions → Pexels b-roll → ffmpeg → vertical MP4 + YouTube OAuth. Forge imports it through a clean bridge — zero duplication.</p>
+      <div class="mono" style="font-size:11.5px;color:var(--dim)">../titan/src/titan/content/ — video · captions · assets/pexels · publish/youtube</div>
+    </div>
+    <div class="panel">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="font-size:20px">⬡</span><strong style="font-size:15px">forge/ — the venture (this repo)</strong></div>
+      <p style="color:var(--mut);font-size:13px;margin:0 0 10px">The business on top: content, monetization, funnel, outreach, distribution, ops, this dashboard. Reuses titan via <span class="mono">src/forge/bootstrap.py</span>.</p>
+      <div class="mono" style="font-size:11.5px;color:var(--gr)">github.com/iamsadat/forge · public · 2 agents (Cowork + Claude Code)</div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-bottom:16px">
+    <strong style="font-size:14px">forge/ folder map</strong>
+    <div class="mono" style="font-size:12.5px;line-height:1.95;margin-top:10px;color:var(--mut)">
+      <div><span style="color:var(--cy)">src/forge/</span> &nbsp;code — <b>bootstrap</b> (titan bridge) · <b>produce</b> (render) · <b>publish</b> (YouTube) · <b>publish_ig</b> (Instagram)</div>
+      <div><span style="color:var(--cy)">content/</span> &nbsp;&nbsp;scripts (12) · product ($49 pack + free magnet) · publishing.md · links.md</div>
+      <div><span style="color:var(--cy)">docs/</span> &nbsp;&nbsp;&nbsp;&nbsp;the brain — venture-memory · METRICS · OPERATIONS · worklog · backlog · funnel-setup · outreach</div>
+      <div><span style="color:var(--cy)">tracker/</span> &nbsp;index.html (this dashboard) · outreach-tracker.xlsx (prospect CRM)</div>
+      <div><span style="color:var(--cy)">renders/</span> &nbsp;the 12 final MP4 deliverables</div>
+      <div><span style="color:var(--cy)">assets/</span> &nbsp;&nbsp;b-roll cache (gitignored) · thumbnails (OE logo)</div>
+      <div><span style="color:var(--dim)">CLAUDE.md</span> the operating contract both agents read first</div>
+    </div>
+  </div>
+
+  <div class="two">
+    <div class="panel">
+      <strong style="font-size:14px">Capabilities &amp; connectors</strong>
+      <div style="margin-top:12px;display:flex;flex-direction:column;gap:9px;font-size:13px">
+        <div class="stream" style="padding:6px 0"><span class="dot ok"></span><b>GitHub repo + Pages</b><span class="tag" style="margin-left:auto;color:var(--gr);border-color:rgba(52,211,153,.4)">live</span></div>
+        <div class="stream" style="padding:6px 0"><span class="dot ok"></span><b>Kit funnel + Gumroad↔Kit</b><span class="tag" style="margin-left:auto;color:var(--gr);border-color:rgba(52,211,153,.4)">live</span></div>
+        <div class="stream" style="padding:6px 0"><span class="dot ok"></span><b>Gmail</b><span class="muted small" style="margin-left:auto">connected · drafts</span></div>
+        <div class="stream" style="padding:6px 0"><span class="dot prog"></span><b>Apollo leads</b><span class="muted small" style="margin-left:auto">connected · API paywalled</span></div>
+        <div class="stream" style="padding:6px 0"><span class="dot prog"></span><b>YouTube auto-upload</b><span class="muted small" style="margin-left:auto">built · run --confirm</span></div>
+        <div class="stream" style="padding:6px 0"><span class="dot prog"></span><b>Instagram auto-poster</b><span class="muted small" style="margin-left:auto">built · needs Meta token</span></div>
+      </div>
+    </div>
+    <div class="panel">
+      <strong style="font-size:14px">Key links</strong>
+      <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px;font-size:13px">
+        <a href="https://iamsadat.github.io/forge/tracker/">🌐 Live dashboard — iamsadat.github.io/forge/tracker</a>
+        <a href="https://github.com/iamsadat/forge">📦 Repo — github.com/iamsadat/forge</a>
+        <a href="https://titanessence.gumroad.com/l/kowmaa">💸 $49 pack — gumroad.com/l/kowmaa</a>
+        <a href="https://titanessence.gumroad.com/l/pignb">🧲 Free magnet — gumroad.com/l/pignb</a>
+        <a href="https://the-ops-engine.kit.com/free-automation">✉️ Kit bio page — the-ops-engine.kit.com</a>
+        <a href="https://instagram.com/the_ops_engine">📱 Instagram — @the_ops_engine</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer>
   Forge · The Ops Engine — venture mission control · <b style="color:var(--gr)">$0 spend</b> until first revenue ·
   <a href="https://iamsadat.github.io/forge/tracker/">live: iamsadat.github.io/forge/tracker</a> ·
@@ -602,7 +661,7 @@ window.addEventListener('load',function(){
 });
 
 var links={};document.querySelectorAll('.nav-links a').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
-var secs=['journey','build','content','money','launch','plan'].map(function(id){return document.getElementById(id)});
+var secs=['journey','build','content','money','launch','plan','structure'].map(function(id){return document.getElementById(id)});
 var nio=new IntersectionObserver(function(es){
   es.forEach(function(en){if(en.isIntersecting){
     for(var k in links)links[k].classList.remove('on');
