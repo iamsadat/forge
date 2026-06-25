@@ -6,6 +6,30 @@ full protocol.
 
 ---
 
+## 2026-06-19 · Cowork (capabilities + IG auto-poster)
+**Did:**
+- Connected **Gmail** (create-draft connector — drafts only, no send tool) and **Apollo**.
+  Apollo's search/enrich **API is paywalled on the free plan** (API_INACCESSIBLE) → can't
+  auto-pull lead lists at $0; web-app free credits are the $0 fallback.
+- Built **`src/forge/publish_ig.py`** — Instagram Reels auto-poster via the official Graph
+  API (ToS-safe), pulls each reel from its public GitHub raw URL, ROI-ordered, owner-gated
+  (dry-run default; `--confirm` to post). Dry-run validated. **Gated on a Meta token** —
+  owner must create a Meta app + long-lived token w/ `instagram_content_publish`
+  (I can't create accounts or handle tokens; a 0-follower account is also ~0 reach).
+- Confirmed **YouTube** auto-upload is already best-practice (official Data API,
+  `publish.py`, validated) — no better alternative; needs `--confirm`.
+- Set Instagram profile photo (OE logo) + value-prop bio earlier; IG web post-upload is
+  bot-blocked (need the Graph API above, or the owner's phone).
+
+**State updated:** none ($0/$0 — pre-revenue).
+**Handoff → Claude Code:** `src/forge/publish_ig.py` is your lane — review/test once the owner
+sets `IG_USER_ID` + `IG_ACCESS_TOKEN` in `titan/.env`; then a scheduled task can post on cadence.
+**Handoff → Owner:** (1) Meta app + IG token = the IG auto-post gate; (2) the real first-$
+lever is still outreach — sourcing emails at $0 is the bottleneck.
+**Next:** owner does the Meta setup when free, OR we focus the outreach motion (the actual path to a sale).
+
+---
+
 ## 2026-06-19 · Cowork (cont.)
 **Did:**
 - **Fixed Gumroad↔Kit** — owner's "Connect" button silently fails (blocked OAuth popup);

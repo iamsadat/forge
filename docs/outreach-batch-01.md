@@ -8,6 +8,23 @@ $0/owner-approval rule).
 same copy as an Instagram/Facebook DM, or read it as a voicemail). Mark status in
 `tracker/outreach-tracker.xlsx` as you go. Goal: 10–20/day — this is your first 6.
 
+## ✉️ Sending setup (Path A — safe + compliant)
+- **Send from:** `The Ops Engine <titan3ssentials@gmail.com>` — NOT your personal Gmail.
+  One-time fix so it's on-brand: Gmail (titan3ssentials) → Settings ⚙ → See all settings →
+  Accounts → "Send mail as" → edit name → **The Ops Engine**.
+- **Append this footer to every email** (keeps you CAN-SPAM-safe):
+  > —
+  > The Ops Engine · automations for local service businesses
+  > Not interested? Reply "unsubscribe" and you won't hear from me again.
+  > [your city / mailing address]
+- **Throttle:** 5–10/day max from a Gmail address, spaced out. Don't blast — that's what
+  gets the account flagged.
+- **Channel reality:** small handymen often have **no public email** — only a website
+  contact form, phone, or IG DM. Where there's no email, paste the same copy into their
+  contact form or send it as a DM. Email only where an address exists.
+- **Recurring:** the `forge-outreach-drafts` scheduled task drafts each morning's batch from
+  the tracker into `docs/outreach-drafts-<date>.md` and pings you — review + send.
+
 **The ask ladder:** free missed-call template (magnet) → free 3-leak audit → $300 starter
 build → $500–1,500 full. Lead with free value; two saved jobs pays for everything.
 
