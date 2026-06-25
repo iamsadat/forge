@@ -269,7 +269,7 @@ footer a{color:var(--mut)}
             style="filter:drop-shadow(0 0 10px rgba(52,211,153,.6))"/>
         </svg>
         <div class="ring-center">
-          <div class="pct grad-text"><span data-count="78">0</span>%</div>
+          <div class="pct grad-text"><span data-count="80">0</span>%</div>
           <div class="lab">overall build</div>
           <div class="ph">Phase 2→3 · Build → Launch</div>
         </div>
@@ -312,10 +312,10 @@ footer a{color:var(--mut)}
 
     <div class="node active">
       <span class="dot">●</span>
-      <span class="ph-pct grad-text">15%</span>
-      <h3>Phase 3</h3><div class="st">Launch · started</div>
-      <div class="bar"><i data-w="15"></i></div>
-      <ul><li>Kit landing + 5-email nurture LIVE</li><li>Left: Gumroad→Kit, IG bio, then publish</li><li>Outreach → first $300–1,500 build</li></ul>
+      <span class="ph-pct grad-text">25%</span>
+      <h3>Phase 3</h3><div class="st">Launch · in progress</div>
+      <div class="bar"><i data-w="25"></i></div>
+      <ul><li>Funnel wired: Kit + Gumroad↔Kit LIVE</li><li>6 outreach prospects loaded, ready to send</li><li>Left: IG bio + start sending → first build</li></ul>
     </div>
   </div>
   <div style="text-align:center"><span class="flag">🎯 Next checkpoint — first revenue</span></div>
@@ -419,7 +419,7 @@ footer a{color:var(--mut)}
     </div>
     <div class="panel">
       <strong style="font-size:14px">The funnel</strong>
-      <p style="color:var(--mut);font-size:12px;margin:6px 0 16px">One link in bio → email → nurture → four ways to pay.</p>
+      <p style="color:var(--mut);font-size:12px;margin:6px 0 16px">One link in bio → email → nurture → four ways to pay. <span style="color:var(--gr)">Gumroad↔Kit synced ✓</span></p>
       <div class="funnel">
         <div class="fstage s1"><b>📱 Instagram / Shorts / Reels</b><small>12 videos · CTA "link in bio"</small></div>
         <div class="fstage s2"><b>🧲 Kit landing page</b><small>LIVE · free missed-call automation → email captured</small></div>
@@ -502,13 +502,11 @@ var VIDEOS=[
   {t:"The 1 Number Every Local Business Should Track",d:22.9,s:"2.0M",p:"Metric"}
 ];
 var TODOS=[
-  {id:"kit",t:"Kit: build landing page (bio hub) + incentive email + 5-email nurture"},
-  {id:"wire",t:"Connect Gumroad → Kit (API key, tags free-magnet / customer)"},
-  {id:"links",t:"Paste real URLs into links.md (BIO_HUB, AFF_N8N)"},
-  {id:"bio",t:"Set Instagram bio link = Kit landing page"},
-  {id:"publish",t:"Publish first reels (3–4/wk) — CTA “link in bio”"},
-  {id:"outreach",t:"Start service outreach — 10–20 businesses/day"},
-  {id:"affiliate",t:"Confirm n8n affiliate acceptance + drop link in nurture"}
+  {id:"bio",t:"Log into Instagram → set bio link = Kit landing page (last M0 step)"},
+  {id:"outreach",t:"Send outreach batch 01 — 6 prospects ready in docs/outreach-batch-01.md"},
+  {id:"publish",t:"Publish first reels — run YouTube --confirm, then post on schedule"},
+  {id:"affiliate",t:"Confirm n8n affiliate → drop link into nurture Email 3"},
+  {id:"kitplan",t:"Decide Kit paid plan before trial ends (~6 days) — $0-rule check"}
 ];
 
 /* ===================== RENDER ===================== */
@@ -575,7 +573,7 @@ function countUp(el){
     el.textContent=Math.round(target*e);if(p<1)requestAnimationFrame(step);else el.textContent=target;}
   requestAnimationFrame(step);
 }
-function fillRing(){var r=$("#ringfg");r.style.transition="stroke-dashoffset 1.8s cubic-bezier(.3,1,.4,1)";r.style.strokeDashoffset=703.7*(1-0.78);}
+function fillRing(){var r=$("#ringfg");r.style.transition="stroke-dashoffset 1.8s cubic-bezier(.3,1,.4,1)";r.style.strokeDashoffset=703.7*(1-0.80);}
 
 var seen={};
 var io=new IntersectionObserver(function(es){
@@ -592,7 +590,7 @@ document.querySelectorAll('[data-count], .spark .b').forEach(function(el){el.dat
 var jio=new IntersectionObserver(function(es){
   es.forEach(function(en){if(!en.isIntersecting)return;
     document.querySelectorAll('.node .bar i').forEach(function(i){i.style.width=i.getAttribute('data-w')+'%'});
-    $("#progline").style.width="80%";
+    $("#progline").style.width="83%";
     jio.disconnect();
   });
 },{threshold:.3});
