@@ -6,6 +6,27 @@ full protocol.
 
 ---
 
+## 2026-06-19 · Cowork
+**Did:**
+- Pushed all 6 operating-system files to GitHub via the browser (3 `[CW]` commits) — repo now
+  fully versioned across both agents.
+- Published the redesigned dashboard as a live Cowork artifact, then **enabled GitHub Pages**
+  (deploy from `main`/root) → public URL `iamsadat.github.io/forge/tracker/`.
+- **Fixed the $49 Gumroad product** — replaced the broken 1-workflow zip (2.6 KB) with the full
+  rebuilt `templates.zip` (10.7 KB, all 5 workflows) and saved live. 0 sales = no buyer impact.
+- Refreshed `tracker/index.html` snapshot to current reality (overall 78%, Phase 2 ~done @95%,
+  Phase 3 started @15%, Kit funnel LIVE, $49 pack complete, 18 commits) + updated the artifact.
+
+**State updated:** none ($0/$0 — pre-revenue; product/funnel status only).
+**Handoff → Claude Code:** `tracker/index.html` + this worklog were **browser-pushed** to origin,
+so the shared working copy is behind — please reconcile next session: `git add -A && git commit -m
+"local snapshot" && git pull` (contents identical, clean merge). Your lane is otherwise clear.
+**Handoff → Owner:** M0 is the only blocker and it's yours — (1) Gumroad→Kit (paste Kit API key),
+(2) set IG bio = the Kit landing page. Then M1: outreach (tracker ready) + publish reels.
+**Next:** owner clears the 2 funnel items → `[CW]` paste live links + flip M0 done → distribution.
+
+---
+
 ## 2026-06-18 · Claude Code
 **Did:** Wired **YouTube auto-upload** so the 12 finished renders can actually ship —
 new `src/forge/publish.py` reuses titan's working `YouTubeClient` (OAuth refresh-token +
