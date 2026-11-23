@@ -15,7 +15,7 @@ pipeline (sibling repo) — does not rebuild it.
   progress tracker.
 - **Progress tracker:** `tracker/index.html` (in-repo, open locally) + hosted
   interactive [Lovable app](https://forge-ops-engine-tracker.lovable.app).
-- **GitHub:** ✅ pushed — https://github.com/iamsadat/forge (private). The 12
+- **GitHub:** ✅ pushed — https://github.com/iamsadat/forge (public — no secrets, personal contact data or prospect phone numbers are committed). The 12
   final MP4 deliverables are included; the 2.3 GB raw Pexels cache and secrets
   stay gitignored.
 

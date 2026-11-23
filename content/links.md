@@ -33,7 +33,7 @@
 - BOOK_AUDIT → Kit nurture Email 5 + outreach replies.
 
 ---
-**Kit funnel — LIVE (built via browser automation, account "The Ops Engine" / titan3ssentials@gmail.com)**
+**Kit funnel — LIVE (built via browser automation, account "The Ops Engine" / <venture-gmail-alias>)**
 - Landing page: `the-ops-engine.kit.com/free-automation` (Cedar template, opt-in email-only + first name)
   - Incentive/confirmation email reframed → on confirm redirects to FREE_TEMPLATE.
 - Sequence "Magnet Nurture": 5 emails published, schedule Day 1/3/6/9/12 (Block 4 copy).
