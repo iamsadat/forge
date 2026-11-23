@@ -6,6 +6,15 @@ full protocol.
 
 ---
 
+## 2026-11-23 · Privacy cleanup (owner-approved)
+**Did:** repo is public (Pages + IG raw URLs need it), so removed the personal Gmail alias from
+`content/links.md` and `docs/outreach-batch-01.md` (now `<venture-gmail-alias>`), removed prospect
+phone numbers from `docs/outreach-batch-01.md` and the tracker's Prospects sheet, fixed the README
+"private" claim.
+**Rule going forward:** keep prospect phones/emails and the real alias in the owner's local copy only;
+do not commit them to this public repo.
+**Handoff:** older commits still contain the removed values (history not rewritten).
+
 ## 2026-06-19 · Cowork (capabilities + IG auto-poster)
 **Did:**
 - Connected **Gmail** (create-draft connector — drafts only, no send tool) and **Apollo**.

@@ -9,8 +9,8 @@ same copy as an Instagram/Facebook DM, or read it as a voicemail). Mark status i
 `tracker/outreach-tracker.xlsx` as you go. Goal: 10–20/day — this is your first 6.
 
 ## ✉️ Sending setup (Path A — safe + compliant)
-- **Send from:** `The Ops Engine <titan3ssentials@gmail.com>` — NOT your personal Gmail.
-  One-time fix so it's on-brand: Gmail (titan3ssentials) → Settings ⚙ → See all settings →
+- **Send from:** `The Ops Engine <<venture-gmail-alias>>` — NOT your personal Gmail.
+  One-time fix so it's on-brand: Gmail (venture alias) → Settings ⚙ → See all settings →
   Accounts → "Send mail as" → edit name → **The Ops Engine**.
 - **Append this footer to every email** (keeps you CAN-SPAM-safe):
   > —
@@ -33,7 +33,7 @@ build → $500–1,500 full. Lead with free value; two saved jobs pays for every
 
 ---
 
-### 1. Texan Handyman Services LLC · 4.9 (43 reviews) · 512-825-7631
+### 1. Texan Handyman Services LLC · 4.9 (43 reviews)
 *Angle: no online booking + few reviews → losing after-hours jobs, not capturing reviews.*
 
 **Subject:** quick idea for Texan Handyman
@@ -47,7 +47,7 @@ send you the template **free**, or set it up for you. Want the free version?
 
 ---
 
-### 2. Callfasthandyman · 5.0 (21 reviews) · 737-309-7879
+### 2. Callfasthandyman · 5.0 (21 reviews)
 *Angle: new/small, building reviews; the name is a layup.*
 
 **Subject:** love the name — one thing though
@@ -60,7 +60,7 @@ missed-call template **free** to try? — The Ops Engine
 
 ---
 
-### 3. House Doctors of Austin · 4.8 (69 reviews) · 737-371-8827
+### 3. House Doctors of Austin · 4.8 (69 reviews)
 *Angle: has booking already → reviews + speed-to-lead are the gaps.*
 
 **Subject:** turning your finished jobs into more reviews
@@ -73,7 +73,7 @@ you're leaking jobs, **free**? — The Ops Engine
 
 ---
 
-### 4. Monty's Handyman & Remodeling · 4.9 (125 reviews) · 737-285-4072
+### 4. Monty's Handyman & Remodeling · 4.9 (125 reviews)
 *Angle: remodeling = high-value jobs → no-shows and slow follow-up hurt most.*
 
 **Subject:** cutting no-shows on remodeling jobs
@@ -86,7 +86,7 @@ text-back for new leads — both run in the background, no app to babysit. Want 
 
 ---
 
-### 5. Handyman Connection of Austin-Westlake · 4.8 (174 reviews) · 512-418-0800
+### 5. Handyman Connection of Austin-Westlake · 4.8 (174 reviews)
 *Angle: enough volume that slow lead response is real money.*
 
 **Subject:** instant follow-up for your web leads
@@ -98,7 +98,7 @@ template, or I'll install the whole system. Want the 3-leak audit first? — The
 
 ---
 
-### 6. DiamondPoint Contractors · 4.9 (503 reviews) · 512-945-8877
+### 6. DiamondPoint Contractors · 4.9 (503 reviews)
 *Angle: established; the one automation most contractors still skip.*
 
 **Subject:** one automation most contractors skip
